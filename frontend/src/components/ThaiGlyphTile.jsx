@@ -105,12 +105,13 @@ export default function ThaiGlyphTile(props) {
         <div className="flex items-center gap-2">
           {isAdmin && (
             <button
+              type="button"
               onClick={() => setOpen(true)}
               className="
                 rounded-md px-2 py-1 text-xs bg-primary/10 text-primary
                 hover:bg-primary/20 focus-visible:outline focus-visible:outline-2
                 focus-visible:outline-primary/50 focus-visible:ring-0
-                transition-colors
+                transition-colors cursor-pointer
               "
               aria-label="Edit letter"
             >
@@ -161,7 +162,7 @@ export default function ThaiGlyphTile(props) {
       </div>
 
       {/* Footer anchored at bottom */}
-      <footer lassName="mt-auto pt-3 flex items-center justify-between">
+      <footer className="mt-auto pt-3 flex items-center justify-between">
         <audio controls src={src} className="w-full max-w-[280px] mx-auto" />
       </footer>
 
