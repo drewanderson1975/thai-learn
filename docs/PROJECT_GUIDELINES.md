@@ -3,6 +3,8 @@
 This document defines the **standards, rules, and processes** for building and maintaining the Thai Learn website.  
 It ensures consistency when using AI tools, coding, or contributing to the project.  
 
+👉 For an overview of the **current project status, goals, and roadmap**, see `PROJECT_SUMMARY.md`.
+
 ---
 
 ## 1. Tech Stack (Fixed)
@@ -59,7 +61,7 @@ It ensures consistency when using AI tools, coding, or contributing to the proje
   - Follow **design system** (colors, fonts, layout).  
   - Maintain **coding standards** (naming conventions, structure).  
 - AI-generated code must be **reviewed and tested** before committing.  
-- Commit messages should be descriptive, e.g.:
+- Commit messages should be descriptive, e.g.:  
   - `Add LessonCard component (React + Tailwind, per design system)`  
 
 ---
@@ -82,3 +84,7 @@ It ensures consistency when using AI tools, coding, or contributing to the proje
 ## 6. Decision Logging
 - All major decisions documented in `CHANGELOG.md`.  
 - Include **what decision was made** and **why** (e.g., “Firebase chosen over Auth0 for simplicity”).  
+
+---
+
+📌 For a live snapshot of **progress, roadmap, and current priorities**, refer to `PROJECT_SUMMARY.md`.
