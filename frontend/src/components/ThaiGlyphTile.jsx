@@ -75,7 +75,7 @@ export default function ThaiGlyphTile(props) {
     <div
       className="
         relative rounded-2xl border border-gray-200 p-4
-        grid grid-rows-[auto,1fr,auto] gap-3 h-full bg-white
+        grid grid-rows-[auto,1fr,auto] gap-2 h-full bg-white
       "
     >
       {/* Header row: left (badges) / right (Edit + Info) */}
@@ -140,9 +140,9 @@ export default function ThaiGlyphTile(props) {
       </div>
 
       {/* Middle content area */}
-      <div className="flex flex-col items-stretch gap-3">
+      <div className="flex flex-col items-stretch gap-3 -mt-1">
         {/* Big glyph */}
-        <div className="thai-glyph text-primary text-center">{glyph}</div>
+        <div className="thai-glyph text-primary text-center leading-none">{glyph}</div>
 
         {/* Centered name line */}
         <div className="text-sm text-gray-700 text-center">
