@@ -1,7 +1,7 @@
 # Thai Learn
 
-A website to teach **Thai** to English speakers.  Potential include **Isan** at a later stage.
-The platform provides guided lessons, practice tools, and review systems to help learners build a strong foundation in the Thai and Isan languages.
+A website to teach **Thai** to English speakers. Future versions may include **Isan**.  
+The platform provides guided lessons, practice tools, and a review system to help learners build a strong foundation in the Thai language.
 
 ---
 
@@ -15,47 +15,38 @@ Build a structured, engaging, and effective language-learning platform starting 
 - **Styling**: Tailwind CSS  
 - **Database**: PostgreSQL  
 - **Authentication**: Firebase Authentication  
-- **Hosting/Version Control**: GitHub (Pages initially; possible Vercel/Netlify/Render later)  
-- **Potential Backend**: Node.js + Express (to connect React frontend with PostgreSQL if required)  
+- **Hosting/Version Control**: GitHub (Pages initially; may expand to Vercel/Netlify/Render)  
+- **Backend (future option)**: Node.js + Express (to connect React frontend with PostgreSQL)  
 
 ---
 
 ## 📚 Features
-- **Guided Lessons**  
-  - Alphabet (letters + sounds)  
-  - Tones (tone identification & practice)  
-  - Vocabulary (simple → extended)  
-  - Common phrases (greetings, family/friends, etc.)  
+### Current Scope
+- Alphabet lessons (letters + sounds)  
+- Tone identification & practice  
+- Review system with topic organization  
+- Listening practice (native audio playback; no voice recognition yet)  
 
-- **Review System**  
-  - Topic-based review (manual access)  
-  - Spaced repetition (automated scheduling)  
-
-- **Exercises**  
-  - Quizzes (MCQ, matching, fill-in-the-blank)  
-  - Listening practice (slow/normal speed, minimal pairs, dialogues)  
-  - Pronunciation practice (listen + repeat; no voice recognition)  
-
-- **Progress Tracking**  
-  - Lesson completion  
-  - Spaced repetition schedule  
-  - Dashboard (progress % + streaks)  
+### Planned
+- Vocabulary (simple → extended)  
+- Common phrases (greetings, family, friends, etc.)  
+- Quizzes (MCQ, matching, fill-in-the-blank)  
+- Progress tracking (completion, spaced repetition scheduling, streaks dashboard)  
 
 ---
 
 ## 📐 Architecture
 - **Frontend**: React + Tailwind for UI components  
 - **Authentication**: Firebase for login/signup  
-- **Database**: PostgreSQL for lessons, users, progress, quizzes  
-- **Backend (optional)**: Node.js/Express as API layer  
-- **Deployment**: GitHub Pages for static MVP  
+- **Database**: PostgreSQL for lessons, users, and progress  
+- **Deployment**: GitHub Pages for MVP  
 
 ---
 
 ## 🚀 Development
 - Version control: GitHub  
-- Workflow: Agile-inspired (issues backlog, sprints, changelog)  
+- Workflow: Agile-inspired (issues backlog, small iterations, changelog)  
 - Documentation:  
-  - `README.md` (public overview)  
-  - `PROJECT_GUIDELINES.md` (design system, coding standards, AI usage)  
-  - `CHANGELOG.md` (track decisions & iterations)  
+  - `README.md` → Public overview  
+  - `PROJECT_SUMMARY.md` → Current status & internal notes  
+  - `CHANGELOG.md` → Track key decisions & iterations  
