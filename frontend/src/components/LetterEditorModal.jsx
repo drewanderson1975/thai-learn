@@ -36,6 +36,68 @@ function deriveOverall(noteStatus, audioStatus) {
   return "Outstanding";
 }
 
+// --- Playback speed control (custom, consistent across sources/browsers) ---
+function SpeedControl({ audioRef, disabled }) {
+  const [open, setOpen] = useState(false);
+  const [rate, setRate] = useState(1);
+  const rates = [0.75, 1, 1.25, 1.5, 2];
+
+  useEffect(() => {
+    if (audioRef?.current) audioRef.current.playbackRate = rate;
+  }, [rate, audioRef]);
+
+  // Re-apply current rate when src changes (e.g., record -> upload URL)
+  useEffect(() => {
+    if (audioRef?.current) audioRef.current.playbackRate = rate;
+  }, [audioRef?.current?.src]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={() => !disabled && setOpen((o) => !o)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        className={
+          "rounded-md px-3 py-1 text-sm cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/50 " +
+          (disabled ? "opacity-50 cursor-not-allowed bg-gray-100 text-gray-400" : "bg-gray-100 hover:bg-gray-200")
+        }
+        title="Playback speed"
+      >
+        {rate}×
+      </button>
+
+      {open && !disabled && (
+        <ul
+          role="listbox"
+          className="absolute right-0 mt-1 w-28 rounded-md border bg-white shadow-lg z-10 py-1"
+        >
+          {rates.map((r) => (
+            <li key={r}>
+              <button
+                type="button"
+                role="option"
+                aria-selected={rate === r}
+                onClick={() => {
+                  setRate(r);
+                  setOpen(false);
+                }}
+                className={
+                  "block w-full text-left px-3 py-1.5 text-sm hover:bg-gray-100 cursor-pointer " +
+                  (rate === r ? "font-semibold" : "")
+                }
+              >
+                {r}×
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 export default function LetterEditorModal({ open, onClose, letter }) {
   // Lock background scroll when modal is open
   useEffect(() => {
@@ -64,8 +126,6 @@ export default function LetterEditorModal({ open, onClose, letter }) {
   const chunksRef = useRef([]);
   const [isRecording, setIsRecording] = useState(false);
 
-  const [uploadPct, setUploadPct] = useState(0);
-
   useEffect(() => {
     setRecorderSupported(!!(navigator.mediaDevices && window.MediaRecorder));
   }, []);
@@ -82,7 +142,6 @@ export default function LetterEditorModal({ open, onClose, letter }) {
         setAudioUrl(url);
         setAudioFile(blob);   // keep the blob for upload
         setAudioStatus("Being reviewed");
-        // stop mic tracks
         if (mr.stream) mr.stream.getTracks().forEach((t) => t.stop());
       };
       mr.start();
@@ -105,7 +164,7 @@ export default function LetterEditorModal({ open, onClose, letter }) {
     if (!file) return;
     const url = URL.createObjectURL(file);
     setAudioUrl(url);
-    setAudioFile(file);   // keep the File for upload
+    setAudioFile(file);
     setAudioStatus("Being reviewed");
   }
 
@@ -120,15 +179,6 @@ export default function LetterEditorModal({ open, onClose, letter }) {
     return letter?.review?.letterStatus || deriveOverall(noteStatus, audioStatus);
   }, [letter?.review?.letterStatus, noteStatus, audioStatus]);
 
-  function guessExtFromType(t) {
-    if (!t) return "webm";
-    if (t.includes("webm")) return "webm";
-    if (t.includes("wav")) return "wav";
-    if (t.includes("mpeg") || t.includes("mp3")) return "mp3";
-    if (t.includes("ogg")) return "ogg";
-    return "webm";
-  }
-
   async function onSave() {
     const id = String(letter?.id || "").trim();
     if (!id) {
@@ -137,13 +187,9 @@ export default function LetterEditorModal({ open, onClose, letter }) {
     }
 
     setSaving(true);
-    const started = performance.now();
-    console.log("[LetterEditor] Saving …", { id, note, noteStatus, audioStatus, hasFile: !!audioFile, audioUrl });
-
     try {
-      // 1) Upload audio if we have a newly recorded/uploaded file
+      // Upload audio if new
       let publicAudioUrl = letter?.audio?.glyph || "";
-
       if (audioFile) {
         const type = audioFile.type || "audio/webm";
         const ext =
@@ -161,18 +207,10 @@ export default function LetterEditorModal({ open, onClose, letter }) {
         const path = `letters/${filename}`;
         const storageRef = ref(storage, path);
 
-        console.log("[LetterEditor] Uploading (simple)…", { path, type, size: file.size });
-
-        if (!file.size) {
-          throw new Error("Recorded/uploaded audio file is empty (size=0). Did you stop recording?");
-        }
-
         await withTimeout(uploadBytes(storageRef, file, { contentType: type }), 15000, "uploadBytes");
         publicAudioUrl = await withTimeout(getDownloadURL(storageRef), 10000, "getDownloadURL");
-        console.log("[LetterEditor] Storage URL:", publicAudioUrl);
       }
 
-      // 2) Build Firestore payload
       const letterStatus =
         (noteStatus === "Done" && audioStatus === "Done")
           ? "Complete"
@@ -197,15 +235,12 @@ export default function LetterEditorModal({ open, onClose, letter }) {
         },
       };
 
-      console.log("[LetterEditor] Writing Firestore …", { id, payload });
       await withTimeout(setDoc(doc(db, "letters", id), payload, { merge: true }), 12000, "setDoc");
-      console.log("✅ Saved to Firestore in", Math.round(performance.now() - started), "ms");
-
       setSaving(false);
       onClose?.();
       setAudioFile(null);
     } catch (e) {
-      console.error("❌ Save failed:", e);
+      console.error("Save failed:", e);
       setSaving(false);
       alert(`Save failed: ${e.code || ""} ${e.message || e}`);
     }
@@ -325,24 +360,38 @@ export default function LetterEditorModal({ open, onClose, letter }) {
                 </div>
               </div>
 
-              {/* Preview */}
+              {/* Preview + Custom controls */}
               <div className="rounded-lg border p-3">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-2">
                   <div className="text-sm text-gray-700 truncate">
                     {audioUrl ? audioUrl : "No audio selected"}
                   </div>
-                  <button
-                    type="button"
-                    onClick={playPause}
-                    className="rounded-md px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/50"
-                    disabled={!audioUrl}
-                  >
-                    Play/Pause
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <SpeedControl audioRef={audioEl} disabled={!audioUrl} />
+                    <button
+                      type="button"
+                      onClick={playPause}
+                      className="rounded-md px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/50"
+                      disabled={!audioUrl}
+                    >
+                      Play/Pause
+                    </button>
+                  </div>
                 </div>
-                <audio ref={audioEl} src={audioUrl || undefined} className="w-full mt-2" controls />
+
+                <audio
+                  ref={audioEl}
+                  src={audioUrl || undefined}
+                  className="w-full mt-2"
+                  controls
+                  preload="metadata"
+                  // Hide browser download + native playback-rate item; we use our own speed control.
+                  // (Supported in Chromium/Safari; Firefox never showed a download button for audio anyway.)
+                  controlsList="nodownload noplaybackrate"
+                />
+
                 <p className="mt-2 text-xs text-gray-500">
-                  (Next step: add waveform + trimming. For now, you can preview the selected recording/upload.)
+                  Tip: We show a custom playback speed so it’s always available (recorded blobs or Firebase URLs).
                 </p>
               </div>
             </div>
@@ -424,7 +473,7 @@ export default function LetterEditorModal({ open, onClose, letter }) {
             </button>
           </div>
           <div className="text-xs text-gray-500">
-            {saving ? (uploadPct ? `Uploading… ${uploadPct}%` : "Saving…") : " "}
+            {saving ? "Saving…" : " "}
           </div>
         </div>
       </div>
