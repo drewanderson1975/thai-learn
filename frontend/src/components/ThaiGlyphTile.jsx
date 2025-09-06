@@ -73,7 +73,7 @@ export default function ThaiGlyphTile(props) {
 
   return (
     <div className="relative rounded-2xl border border-gray-200 p-4 flex flex-col gap-3 h-full bg-white">
-      {/* Admin-only Edit button moved to top-right */}
+      {/* Admin-only Edit button (top-right) */}
       {isAdmin && (
         <button
           onClick={() => setOpen(true)}
@@ -126,8 +126,10 @@ export default function ThaiGlyphTile(props) {
       {/* Tip */}
       {tip && <p className="text-sm text-gray-700 text-left">{tip}</p>}
 
-      {/* Audio anchored to bottom */}
-      <audio controls src={src} className="mt-auto w-full max-w-[280px] mx-auto" />
+      {/* Footer */}
+      <footer className="mt-auto pt-3 border-t border-gray-200 flex flex-col items-center gap-2">
+        <audio controls src={src} className="w-full max-w-[280px]" />
+      </footer>
 
       {/* Editor Modal */}
       <LetterEditorModal
