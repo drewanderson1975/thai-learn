@@ -140,7 +140,7 @@ export default function ThaiGlyphTile(props) {
       </div>
 
       {/* Middle content area */}
-      <div className="flex flex-col items-stretch gap-1">
+      <div className="flex flex-col items-stretch gap-3">
         {/* Big glyph */}
         <div className="thai-glyph text-primary text-center">{glyph}</div>
 
@@ -154,7 +154,7 @@ export default function ThaiGlyphTile(props) {
 
         {/* Tip / note (enlarged for readability) */}
         {tip && (
-          <p className="text-base font-medium leading-relaxed text-gray-800 text-left">
+          <p className="text-base font-sm leading-relaxed text-gray-800 text-left">
             {tip}
           </p>
         )}
