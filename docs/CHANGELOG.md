@@ -12,7 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Documentation drafts prepared (`README.md`, `PROJECT_GUIDELINES.md`, `CHANGELOG.md`).
 
 ### Changed
-- N/A
+- `AdminGate.jsx`: Removed non-production test scaffolding (Test DB + Test Storage buttons, `withTimeout` helper, unused Firebase imports) while retaining admin auth flow. (PR #2)
+- `firebase.js`: Removed debug `console.log` statements related to storage bucket initialization. (PR #2)
+
+### Removed
+- Legacy test component `frontend/src/components/LetterEditorModal_old.jsx` (obsolete Firebase test editor). (PR #2)
 
 ### Fixed
 - N/A
