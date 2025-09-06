@@ -1,17 +1,7 @@
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { auth, db, storage  } from "../lib/firebase";
-import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
-import { ref, uploadBytes } from "firebase/storage";
-
-function withTimeout(promise, ms, label) {
-  return Promise.race([
-    promise,
-    new Promise((_, reject) =>
-      setTimeout(() => reject(new Error(`Timeout after ${ms}ms: ${label}`)), ms)
-    ),
-  ]);
-}
+import { auth, db } from "../lib/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 export function useIsAdmin() {
   const [state, setState] = useState({ loading: true, isAdmin: false, user: null, error: null });
@@ -94,62 +84,16 @@ export function AdminAuthPanel() {
     );
   }
 
-// ... inside the "return" that renders when user && isAdmin ...
-return (
-  <div className="flex items-center gap-2 text-sm">
-    <span className="text-gray-600">Signed in as {user.email}</span>
-
-    {/* 🔧 Test Firestore */}
-    <button
-      type="button"
-      // replace the Test DB onClick with this:
-      onClick={async () => {
-        try {
-          // write into an allowed collection: letters/__debug
-          await setDoc(doc(db, "letters", "__debug"), {
-            ts: serverTimestamp(),
-            note: "hello from AdminAuthPanel",
-          }, { merge: true });
-          alert("Firestore OK (letters/__debug written)");
-        } catch (e) {
-          alert(`Firestore FAILED: ${e.code || ""} ${e.message || e}`);
-          console.error(e);
-        }
-      }}
-      className="px-2 py-1 rounded bg-emerald-100 hover:bg-emerald-200"
-      title="Writes debug/ping"
-    >
-      Test DB
-    </button>
-
-    {/* 🔧 Test Storage */}
-    <button
-      type="button"
-      onClick={async () => {
-        try {
-          console.log("[Test Storage] bucket =", storage.app.options.storageBucket);
-          const blob = new Blob([new Uint8Array([1,2,3,4])], { type: "application/octet-stream" });
-          const path = `letters/__debug_${Date.now()}.bin`;
-          console.log("[Test Storage] uploading to", path);
-          await withTimeout(uploadBytes(ref(storage, path), blob), 15000, "uploadBytes");
-          alert(`Storage OK (${path})`);
-        } catch (e) {
-          console.error("[Test Storage] FAILED:", e);
-          alert(`Storage FAILED: ${e.code || ""} ${e.message || e}`);
-        }
-      }}
-      className="px-2 py-1 rounded bg-blue-100 hover:bg-blue-200"
-    >
-      Test Storage
-    </button>
-
-    <button
-      type="button"
-      onClick={() => signOut(auth)}
-      className="px-3 py-1 rounded bg-gray-100 hover:bg-gray-200 cursor-pointer"
-    >
-      Sign out
-    </button>
-  </div>
-);
+  return (
+    <div className="flex items-center gap-2 text-sm">
+      <span className="text-gray-600">Signed in as {user.email}</span>
+      <button
+        type="button"
+        onClick={() => signOut(auth)}
+        className="px-3 py-1 rounded bg-gray-100 hover:bg-gray-200 cursor-pointer"
+      >
+        Sign out
+      </button>
+    </div>
+  );
 }
