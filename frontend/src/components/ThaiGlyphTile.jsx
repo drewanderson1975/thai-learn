@@ -154,7 +154,7 @@ export default function ThaiGlyphTile(props) {
 
         {/* Tip / note (enlarged for readability) */}
         {tip && (
-          <p className="text-base font-medium leading-relaxed text-gray-800 text-left">
+          <p className="text-base font-sm leading-relaxed text-gray-600 text-left">
             {tip}
           </p>
         )}
