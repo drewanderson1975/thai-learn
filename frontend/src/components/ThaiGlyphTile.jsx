@@ -204,3 +204,50 @@ export default function ThaiGlyphTile(props) {
           </InfoPopover>
         </div>
       </div>
+
+      {/* Middle content area */}
+      <div className="flex flex-col items-stretch gap-3 -mt-1">
+        {/* Big glyph */}
+        <div className="thai-glyph text-primary text-center leading-none">{glyph}</div>
+
+        {/* Centered name line */}
+        <div className="text-sm text-gray-700 text-center">
+          <span className="font-thai">{nameThai}</span>
+          <span className="mx-1">•</span>
+          <span>{nameRtgs}</span>
+          {nameGloss ? <span className="text-gray-500"> ({nameGloss})</span> : null}
+        </div>
+
+        {/* Tip / note (enlarged for readability) */}
+        {tip && (
+          <p className="text-base font-sm leading-relaxed text-gray-600 text-left">
+            {tip}
+          </p>
+        )}
+      </div>
+
+      {/* Footer anchored at bottom */}
+      <footer className="mt-auto pt-3 flex items-center justify-between gap-2">
+        {/* Audio element: hide native menu & download, keep standard controls */}
+        <audio
+          ref={audioEl}
+          controls
+          src={src}
+          preload="metadata"
+          className="w-full max-w-[280px] mx-auto flex-1"
+          // Hide browser download + native playback-rate entry (we show our own speed control)
+          controlsList="nodownload noplaybackrate"
+        />
+        {/* Custom speed button (placed where the menu normally appears, on the right) */}
+        <SpeedControl audioRef={audioEl} disabled={!src} />
+      </footer>
+
+      {/* Editor Modal */}
+      <LetterEditorModal
+        open={open}
+        onClose={() => setOpen(false)}
+        letter={letterForEditor}
+      />
+    </div>
+  );
+}
