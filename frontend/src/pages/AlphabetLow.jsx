@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
 import ThaiGlyphTile from "../components/ThaiGlyphTile";
-import letters from "../data/alphabet/letters.json";
 import Breadcrumbs from "../components/Breadcrumbs";
+import useLettersData from "../hooks/useLettersData";
 
 export default function ReviewLettersLow() {
+  const { letters, loading, error } = useLettersData({ consonantClass: "Low" });
+
+  if (loading) return <div>Loading…</div>;
+  if (error) return <div className="text-red-600">Error loading letters: {String(error)}</div>;
+
   const lowLetters = letters.filter(
     (l) => l.type === "consonant" && l.consonantClass === "Low"
   );
@@ -11,7 +16,7 @@ export default function ReviewLettersLow() {
   return (
     <section>
       <Breadcrumbs />
-      
+
       <h1 className="text-2xl font-heading text-primary">
         Thai Consonants – Low Class
       </h1>
@@ -38,7 +43,7 @@ export default function ReviewLettersLow() {
         {lowLetters.map((item) => (
           <ThaiGlyphTile
             key={item.id}
-            id={item.id} 
+            id={item.id}
             glyph={item.glyph}
             consonantClass={item.consonantClass}
             nameThai={item.nameThai}

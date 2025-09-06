@@ -1,12 +1,17 @@
-import { Link } from "react-router-dom";
 import ThaiGlyphTile from "../components/ThaiGlyphTile";
-import letters from "../data/alphabet/letters.json";
 import Breadcrumbs from "../components/Breadcrumbs";
+import useLettersData from "../hooks/useLettersData";
 
 export default function ReviewLettersMid() {
-  const midLetters = letters.filter(
-    (l) => l.type === "consonant" && l.consonantClass === "Mid"
-  );
+  const { letters = [], loading, error } = useLettersData({ consonantClass: "Mid" });
+
+  if (loading) return <div>Loading…</div>;
+  if (error) return <div className="text-red-600">Error loading letters: {String(error)}</div>;
+
+  const midLetters = letters.filter((l) => {
+    const cls = (l?.consonantClass || "").toString().toLowerCase();
+    return l?.type === "consonant" && (cls === "mid" || cls === "middle");
+  });
 
   return (
     <section>
@@ -16,34 +21,25 @@ export default function ReviewLettersMid() {
         Thai Consonants – Middle Class
       </h1>
 
-      {/* Rules section */}
       <h2 className="mt-6 text-xl font-heading text-primary">Middle Class Rules</h2>
       <div className="mt-2 text-gray-700 space-y-2">
         <p>
-          Thai consonants are divided into three classes: high, middle, and low.
-          Middle class consonants form the reference group for the tone rules.
+          Middle class consonants form the reference pattern for tone calculation.
+          They interact with tone marks and syllable openness (live vs dead) in the
+          standard way that most learners encounter first.
         </p>
-        <p>
-          When a middle class consonant is used with a <strong>live syllable</strong>
-          (ending in a vowel or sonorant), the default tone is <em>mid tone</em>.
-        </p>
-        <p>
-          With a <strong>dead syllable</strong> (ending in a stop or short vowel),
-          the default tone is <em>low tone</em>.
-        </p>
-        <p>
-          Tone marks placed on middle class consonants create all four other tones
-          (low, falling, high, rising), which is why they’re considered the
-          “reference” group for tone rules.
+        <p className="text-sm text-gray-600">
+          Tip: when in doubt, use Middle class mappings as your baseline and learn
+          High/Low deviations afterwards. We'll show full tone mapping tables in the
+          tone lessons.
         </p>
       </div>
 
-      {/* Tile grid */}
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {midLetters.map((item) => (
           <ThaiGlyphTile
             key={item.id}
-            id={item.id} 
+            id={item.id}
             glyph={item.glyph}
             consonantClass={item.consonantClass}
             nameThai={item.nameThai}

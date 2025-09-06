@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
 import ThaiGlyphTile from "../components/ThaiGlyphTile";
-import letters from "../data/alphabet/letters.json";
 import Breadcrumbs from "../components/Breadcrumbs";
+import useLettersData from "../hooks/useLettersData";
 
 export default function ReviewLettersHigh() {
+  const { letters, loading, error } = useLettersData({ consonantClass: "High" });
+
+  if (loading) return <div>Loading…</div>;
+  if (error) return <div className="text-red-600">Error loading letters: {String(error)}</div>;
+
   const highLetters = letters.filter(
     (l) => l.type === "consonant" && l.consonantClass === "High"
   );
@@ -12,7 +17,6 @@ export default function ReviewLettersHigh() {
     <section>
       <Breadcrumbs />
 
- 
       <h1 className="text-2xl font-heading text-primary">
         Thai Consonants – High Class
       </h1>
@@ -41,7 +45,7 @@ export default function ReviewLettersHigh() {
         {highLetters.map((item) => (
           <ThaiGlyphTile
             key={item.id}
-            id={item.id} 
+            id={item.id}
             glyph={item.glyph}
             consonantClass={item.consonantClass}
             nameThai={item.nameThai}
