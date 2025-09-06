@@ -1,17 +1,17 @@
-import { Link } from "react-router-dom";
 import ThaiGlyphTile from "../components/ThaiGlyphTile";
 import Breadcrumbs from "../components/Breadcrumbs";
 import useLettersData from "../hooks/useLettersData";
 
 export default function ReviewLettersMid() {
-  const { letters, loading, error } = useLettersData({ consonantClass: "Middle" });
+  const { letters = [], loading, error } = useLettersData({ consonantClass: "Mid" });
 
   if (loading) return <div>Loading…</div>;
   if (error) return <div className="text-red-600">Error loading letters: {String(error)}</div>;
 
-  const midLetters = letters.filter(
-    (l) => l.type === "consonant" && l.consonantClass === "Middle"
-  );
+  const midLetters = letters.filter((l) => {
+    const cls = (l?.consonantClass || "").toString().toLowerCase();
+    return l?.type === "consonant" && (cls === "mid" || cls === "middle");
+  });
 
   return (
     <section>
