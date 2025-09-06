@@ -72,18 +72,29 @@ export default function ThaiGlyphTile(props) {
   };
 
   return (
-    <div className="relative rounded-2xl border border-gray-200 p-4 flex flex-col gap-3 bg-white">
-      {/* Header row: class badge (left) + info (right) */}
-      <div className="flex items-center justify-between">
+    <div
+      className="
+        relative rounded-2xl border border-gray-200 p-4
+        grid grid-rows-[auto,1fr,auto] gap-3 h-full bg-white
+      "
+    >
+      {/* Header row: left (badges) / right (Edit + Info) */}
+      <div className="flex items-start justify-between">
         <div className="flex items-center gap-2">
-          <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${classBadge(consonantClass)}`}>
+          <span
+            className={`text-xs font-semibold px-2 py-0.5 rounded-full ${classBadge(
+              consonantClass
+            )}`}
+          >
             {consonantClass} class
           </span>
 
-          {/* Admin-only overall status pill */}
+            {/* Admin-only overall status pill */}
           {isAdmin && (
             <span
-              className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusStyles[overallStatus] || "bg-gray-100 text-gray-700"}`}
+              className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
+                statusStyles[overallStatus] || "bg-gray-100 text-gray-700"
+              }`}
               title="Overall review status"
             >
               {overallStatus}
@@ -91,45 +102,68 @@ export default function ThaiGlyphTile(props) {
           )}
         </div>
 
-        <InfoPopover>
-          <div className="space-y-1 text-gray-700">
-            <div><strong>RTGS:</strong> {rtgs}</div>
-            <div><strong>IPA:</strong> {ipa}{ipaNote ? ` (${ipaNote})` : ""}</div>
-            <div><strong>Initial:</strong> {initial}</div>
-            <div><strong>Final:</strong> {final}</div>
-          </div>
-        </InfoPopover>
+        <div className="flex items-center gap-2">
+          {isAdmin && (
+            <button
+              onClick={() => setOpen(true)}
+              className="
+                rounded-md px-2 py-1 text-xs bg-primary/10 text-primary
+                hover:bg-primary/20 focus-visible:outline focus-visible:outline-2
+                focus-visible:outline-primary/50 focus-visible:ring-0
+                transition-colors
+              "
+              aria-label="Edit letter"
+            >
+              Edit
+            </button>
+          )}
+
+          {/* Info icon / popover trigger (ensure InfoPopover applies aria-label to its trigger) */}
+          <InfoPopover aria-label="Letter info">
+            <div className="space-y-1 text-gray-700">
+              <div>
+                <strong>RTGS:</strong> {rtgs}
+              </div>
+              <div>
+                <strong>IPA:</strong> {ipa}
+                {ipaNote ? ` (${ipaNote})` : ""}
+              </div>
+              <div>
+                <strong>Initial:</strong> {initial}
+              </div>
+              <div>
+                <strong>Final:</strong> {final}
+              </div>
+            </div>
+          </InfoPopover>
+        </div>
       </div>
 
-      {/* Big glyph */}
-      <div className="thai-glyph text-primary text-center">{glyph}</div>
+      {/* Middle content area */}
+      <div className="flex flex-col items-stretch gap-3">
+        {/* Big glyph */}
+        <div className="thai-glyph text-primary text-center">{glyph}</div>
 
-      {/* Centered name line */}
-      <div className="text-sm text-gray-700 text-center">
-        <span className="font-thai">{nameThai}</span>
-        <span className="mx-1">•</span>
-        <span>{nameRtgs}</span>
-        {nameGloss ? <span className="text-gray-500"> ({nameGloss})</span> : null}
+        {/* Centered name line */}
+        <div className="text-sm text-gray-700 text-center">
+          <span className="font-thai">{nameThai}</span>
+          <span className="mx-1">•</span>
+          <span>{nameRtgs}</span>
+          {nameGloss ? <span className="text-gray-500"> ({nameGloss})</span> : null}
+        </div>
+
+        {/* Tip / note (enlarged for readability) */}
+        {tip && (
+          <p className="text-base font-medium leading-relaxed text-gray-800 text-left">
+            {tip}
+          </p>
+        )}
       </div>
 
-      {/* Tip */}
-      {tip && <p className="text-sm text-gray-700 text-left">{tip}</p>}
-
-      {/* Footer with audio player */}
-      <footer className="mt-auto">
+      {/* Footer anchored at bottom */}
+      <footer className="pt-3 border-t border-gray-200 flex flex-col items-center gap-2">
         <audio controls src={src} className="w-full max-w-[280px] mx-auto" />
       </footer>
-
-      {/* Admin-only Edit button moved to top-right */}
-      {isAdmin && (
-        <button
-          onClick={() => setOpen(true)}
-          className="absolute right-2 top-2 z-10 rounded-md px-2 py-1 text-xs bg-primary/10 text-primary hover:bg-primary/20"
-          title="Edit letter"
-        >
-          Edit
-        </button>
-      )}
 
       {/* Editor Modal */}
       <LetterEditorModal
