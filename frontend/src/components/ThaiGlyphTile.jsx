@@ -72,11 +72,22 @@ export default function ThaiGlyphTile(props) {
   };
 
   return (
-    <div className="relative rounded-2xl border border-gray-200 p-4 flex flex-col gap-3 bg-white">
+    <div className="relative rounded-2xl border border-gray-200 p-4 flex flex-col gap-3 h-full bg-white">
+      {/* Admin-only Edit button moved to top-right */}
+      {isAdmin && (
+        <button
+          onClick={() => setOpen(true)}
+          className="absolute right-2 top-2 z-10 rounded-md px-2 py-1 text-xs bg-primary/10 text-primary hover:bg-primary/20"
+          title="Edit letter"
+        >
+          Edit
+        </button>
+      )}
+
       {/* Header row: class badge (left) + info (right) */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${classBadge(consonantClass)}`}>
+          <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${classBadge(consonantClass)}`}> 
             {consonantClass} class
           </span>
 
@@ -115,19 +126,8 @@ export default function ThaiGlyphTile(props) {
       {/* Tip */}
       {tip && <p className="text-sm text-gray-700 text-left">{tip}</p>}
 
-      {/* Audio */}
-      <audio controls src={src} className="w-full max-w-[280px] mx-auto" />
-
-      {/* Admin-only Edit button moved to top-right */}
-      {isAdmin && (
-        <button
-          onClick={() => setOpen(true)}
-          className="absolute right-2 top-2 z-10 rounded-md px-2 py-1 text-xs bg-primary/10 text-primary hover:bg-primary/20"
-          title="Edit letter"
-        >
-          Edit
-        </button>
-      )}
+      {/* Audio anchored to bottom */}
+      <audio controls src={src} className="mt-auto w-full max-w-[280px] mx-auto" />
 
       {/* Editor Modal */}
       <LetterEditorModal
