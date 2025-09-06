@@ -1,0 +1,18 @@
+id: kho-khwai
+glyph: "ค"
+type: consonant
+consonantClass: Low
+nameThai: "ควาย"
+nameRtgs: khwai
+nameGloss: buffalo
+rtgs: kh
+ipa: "/kʰ/"
+ipaNote: aspirated
+initial: "/kʰ/"
+final: "/k̚/"
+tip: "Aspirated ‘kh’, like ‘k’ with a strong puff of air; final becomes unreleased /k/."
+audio:
+  glyph: "/assets/audio/letters/kho_khwai.mp3"
+examples:
+  initialSamples: [word-khwam]
+  finalSamples: [word-rak]

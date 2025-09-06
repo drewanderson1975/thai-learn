@@ -1,0 +1,18 @@
+id: tho-thahan
+glyph: "ท"
+type: consonant
+consonantClass: High
+nameThai: "ทหาร"
+nameRtgs: thahan
+nameGloss: soldier
+rtgs: th
+ipa: "/tʰ/"
+ipaNote: aspirated stop
+initial: "/tʰ/"
+final: "/t̚/"
+tip: "Aspirated ‘t’; final becomes unreleased /t/."
+audio:
+  glyph: "/assets/audio/letters/tho_thahan.mp3"
+examples:
+  initialSamples: [word-thai]
+  finalSamples: [word-sathit]

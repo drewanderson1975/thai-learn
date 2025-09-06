@@ -1,0 +1,18 @@
+id: ko-kai
+glyph: "ก"
+type: consonant
+consonantClass: Mid
+nameThai: "ไก่"
+nameRtgs: kai
+nameGloss: chicken
+rtgs: k
+ipa: "/k/"
+ipaNote: unaspirated
+initial: "/k/ (unaspirated)"
+final: "/k̚/ (unreleased stop)"
+tip: "Hard ‘g/k’ without a puff of air; final position becomes a clipped, unreleased /k/."
+audio:
+  glyph: "/assets/audio/letters/ko_kai.mp3"
+examples:
+  initialSamples: [word-khao, word-kaan]
+  finalSamples: [word-rak, word-nak]

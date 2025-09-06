@@ -1,0 +1,18 @@
+id: so-so
+glyph: "ซ"
+type: consonant
+consonantClass: Low
+nameThai: "โซ่"
+nameRtgs: so
+nameGloss: chain
+rtgs: s
+ipa: "/s/"
+ipaNote: voiceless fricative
+initial: "/s/"
+final: "/t̚/"
+tip: "Clear ‘s’ sound; final position becomes unreleased /t/."
+audio:
+  glyph: "/assets/audio/letters/so_so.mp3"
+examples:
+  initialSamples: [word-soon]
+  finalSamples: [word-sat]

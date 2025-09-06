@@ -1,0 +1,18 @@
+id: cho-choe
+glyph: "ฌ"
+type: consonant
+consonantClass: Low
+nameThai: "เฌอ"
+nameRtgs: choe
+nameGloss: tree
+rtgs: ch
+ipa: "/tɕʰ/"
+ipaNote: aspirated
+initial: "/tɕʰ/"
+final: "—"
+tip: "Rare aspirated ‘ch’ sound, mainly in Pali/Sanskrit loanwords."
+audio:
+  glyph: "/assets/audio/letters/cho_choe.mp3"
+examples:
+  initialSamples: [word-choei]
+  finalSamples: []

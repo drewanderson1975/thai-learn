@@ -1,0 +1,50 @@
+[
+  {
+    "slug": "alphabet-consonants-1",
+    "title": "Thai Alphabet: Consonants (Part 1)",
+    "description": "Get to know core consonants, names, and base sounds.",
+    "level": "Beginner",
+    "badge": "Core",
+    "locked": false
+  },
+  {
+    "slug": "alphabet-vowels-1",
+    "title": "Thai Alphabet: Vowels (Part 1)",
+    "description": "Short vs long vowels and how they’re written.",
+    "level": "Beginner",
+    "badge": "Core",
+    "locked": false
+  },
+  {
+    "slug": "tones-intro",
+    "title": "Tones: Introduction",
+    "description": "Understand the 5 tones and why they change meanings.",
+    "level": "Beginner",
+    "badge": "Core",
+    "locked": false
+  },
+  {
+    "slug": "tones-minimal-pairs",
+    "title": "Tones: Minimal Pairs",
+    "description": "Train your ear with common minimal pairs.",
+    "level": "Beginner",
+    "badge": "Practice",
+    "locked": false
+  },
+  {
+    "slug": "syllable-basics",
+    "title": "Syllable Basics",
+    "description": "How syllables are built: initial, vowel, final.",
+    "level": "Beginner",
+    "badge": "Core",
+    "locked": false
+  },
+  {
+    "slug": "greetings-intros",
+    "title": "Greetings & Introductions",
+    "description": "Say hello, introduce yourself, and be polite.",
+    "level": "Beginner",
+    "badge": "Phrasebook",
+    "locked": true
+  }
+]

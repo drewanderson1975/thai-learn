@@ -1,0 +1,18 @@
+id: to-patak
+glyph: "ฏ"
+type: consonant
+consonantClass: Mid
+nameThai: "ปฏัก"
+nameRtgs: pa-tak
+nameGloss: goad
+rtgs: t
+ipa: "/t/"
+ipaNote: unaspirated
+initial: "/t/"
+final: "/t̚/"
+tip: "Unaspirated ‘t’; similar to English ‘stop’; final becomes unreleased /t/."
+audio:
+  glyph: "/assets/audio/letters/to_patak.mp3"
+examples:
+  initialSamples: [word-taam]
+  finalSamples: [word-wat]

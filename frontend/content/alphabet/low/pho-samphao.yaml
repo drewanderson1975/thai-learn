@@ -1,0 +1,18 @@
+id: pho-samphao
+glyph: "ภ"
+type: consonant
+consonantClass: Low
+nameThai: "สำเภา"
+nameRtgs: samphao
+nameGloss: junk (ship)
+rtgs: ph
+ipa: "/pʰ/"
+ipaNote: aspirated stop
+initial: "/pʰ/ (aspirated)"
+final: "/p̚/ (unreleased stop)"
+tip: "Aspirated ‘p’ like พ; mainly found in Pali/Sanskrit loanwords; final becomes unreleased /p/."
+audio:
+  glyph: "/assets/audio/letters/pho_samphao.mp3"
+examples:
+  initialSamples: [word-phasa]
+  finalSamples: [word-sapp]

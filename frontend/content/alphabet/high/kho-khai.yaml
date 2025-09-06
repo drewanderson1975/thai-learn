@@ -1,0 +1,18 @@
+id: kho-khai
+glyph: "ข"
+type: consonant
+consonantClass: High
+nameThai: "ไข่"
+nameRtgs: khai
+nameGloss: egg
+rtgs: kh
+ipa: "/kʰ/"
+ipaNote: aspirated
+initial: "/kʰ/ (aspirated)"
+final: "/k̚/ (unreleased stop)"
+tip: "Strong puff of air on the initial; final position becomes unreleased /k/."
+audio:
+  glyph: "/assets/audio/letters/kho_khai.mp3"
+examples:
+  initialSamples: [word-khao]
+  finalSamples: [word-raak]

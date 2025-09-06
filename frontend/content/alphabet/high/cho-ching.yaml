@@ -1,0 +1,18 @@
+id: cho-ching
+glyph: "ฉ"
+type: consonant
+consonantClass: High
+nameThai: "ฉิ่ง"
+nameRtgs: ching
+nameGloss: cymbals
+rtgs: ch
+ipa: "/tɕʰ/"
+ipaNote: aspirated affricate
+initial: "/tɕʰ/"
+final: "—"
+tip: "Aspirated 'ch' sound; occurs only at the beginning of words."
+audio:
+  glyph: "/assets/audio/letters/cho_ching.mp3"
+examples:
+  initialSamples: [word-chan]
+  finalSamples: []

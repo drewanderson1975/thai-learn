@@ -1,0 +1,18 @@
+id: cho-chang
+glyph: "ช"
+type: consonant
+consonantClass: Low
+nameThai: "ช้าง"
+nameRtgs: chang
+nameGloss: elephant
+rtgs: ch
+ipa: "/tɕʰ/"
+ipaNote: aspirated affricate
+initial: "/tɕʰ/"
+final: "/t̚/"
+tip: "Aspirated ‘ch’ sound; final position changes to unreleased /t/."
+audio:
+  glyph: "/assets/audio/letters/cho_chang.mp3"
+examples:
+  initialSamples: [word-chang]
+  finalSamples: [word-rach]

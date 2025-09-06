@@ -1,0 +1,18 @@
+id: ngo-ngoo
+glyph: "ง"
+type: consonant
+consonantClass: Low
+nameThai: "งู"
+nameRtgs: ngu
+nameGloss: snake
+rtgs: ng
+ipa: "/ŋ/"
+ipaNote: velar nasal
+initial: "/ŋ/"
+final: "/ŋ/"
+tip: "Like ‘ng’ in “sing”. Allowed at the start of words in Thai; same /ŋ/ sound word-finally."
+audio:
+  glyph: "/assets/audio/letters/ngo_ngoo.mp3"
+examples:
+  initialSamples: [word-ngaa]
+  finalSamples: [word-rang]

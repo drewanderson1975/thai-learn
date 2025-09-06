@@ -1,0 +1,18 @@
+id: ro-ruea
+glyph: "ร"
+type: consonant
+consonantClass: Low
+nameThai: "เรือ"
+nameRtgs: ruea
+nameGloss: boat
+rtgs: r
+ipa: "/r/"
+ipaNote: trilled / rolled
+initial: "/r/"
+final: "/n/"
+tip: "Rolled/trilled ‘r’ sound; in final position it becomes /n/."
+audio:
+  glyph: "/assets/audio/letters/ro_ruea.mp3"
+examples:
+  initialSamples: [word-rot]
+  finalSamples: [word-thon]

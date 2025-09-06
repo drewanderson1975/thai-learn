@@ -1,0 +1,18 @@
+id: wo-waen
+glyph: "ว"
+type: consonant
+consonantClass: Low
+nameThai: "แหวน"
+nameRtgs: waen
+nameGloss: ring
+rtgs: w
+ipa: "/w/"
+ipaNote: labio-velar approximant
+initial: "/w/"
+final: "/u/"
+tip: "Like English ‘w’; in final position it acts like vowel /u/."
+audio:
+  glyph: "/assets/audio/letters/wo_waen.mp3"
+examples:
+  initialSamples: [word-wan]
+  finalSamples: [word-thaw]

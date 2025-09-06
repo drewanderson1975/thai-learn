@@ -1,0 +1,18 @@
+id: do-dek
+glyph: "ด"
+type: consonant
+consonantClass: Mid
+nameThai: "เด็ก"
+nameRtgs: dek
+nameGloss: child
+rtgs: d
+ipa: "/d/"
+ipaNote: alveolar stop
+initial: "/d/"
+final: "/t̚/"
+tip: "Hard ‘d’ sound; final position changes to unreleased /t/."
+audio:
+  glyph: "/assets/audio/letters/do_dek.mp3"
+examples:
+  initialSamples: [word-dee]
+  finalSamples: [word-rat]

@@ -1,0 +1,18 @@
+id: lo-chula
+glyph: "ฬ"
+type: consonant
+consonantClass: Low
+nameThai: "จุฬา"
+nameRtgs: chula
+nameGloss: kite (traditional)
+rtgs: l
+ipa: "/l/"
+ipaNote: lateral approximant
+initial: "/l/"
+final: "/n/"
+tip: "An ‘l’ letter used mainly in Pali/Sanskrit loans; in final position it’s pronounced /n/."
+audio:
+  glyph: "/assets/audio/letters/lo_chula.mp3"
+examples:
+  initialSamples: [word-lanna]
+  finalSamples: [word-phon]

@@ -1,0 +1,18 @@
+id: mo-ma
+glyph: "ม"
+type: consonant
+consonantClass: Low
+nameThai: "ม้า"
+nameRtgs: ma
+nameGloss: horse
+rtgs: m
+ipa: "/m/"
+ipaNote: bilabial nasal
+initial: "/m/"
+final: "/m/"
+tip: "Like English ‘m’; same sound initially and finally."
+audio:
+  glyph: "/assets/audio/letters/mo_ma.mp3"
+examples:
+  initialSamples: [word-maak]
+  finalSamples: [word-tham]

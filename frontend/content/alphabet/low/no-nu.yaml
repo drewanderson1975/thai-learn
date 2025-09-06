@@ -1,0 +1,18 @@
+id: no-nu
+glyph: "น"
+type: consonant
+consonantClass: Low
+nameThai: "หนู"
+nameRtgs: nu
+nameGloss: mouse
+rtgs: n
+ipa: "/n/"
+ipaNote: alveolar nasal
+initial: "/n/"
+final: "/n/"
+tip: "Plain ‘n’ sound; very common in both initial and final positions."
+audio:
+  glyph: "/assets/audio/letters/no_nu.mp3"
+examples:
+  initialSamples: [word-naa]
+  finalSamples: [word-kan]

@@ -1,0 +1,18 @@
+id: pho-phueng
+glyph: "ผ"
+type: consonant
+consonantClass: High
+nameThai: "ผึ้ง"
+nameRtgs: phueng
+nameGloss: bee
+rtgs: ph
+ipa: "/pʰ/"
+ipaNote: aspirated stop
+initial: "/pʰ/"
+final: "—"
+tip: "Aspirated ‘p’; cannot occur at the end of words."
+audio:
+  glyph: "/assets/audio/letters/pho_phueng.mp3"
+examples:
+  initialSamples: [word-phat]
+  finalSamples: []

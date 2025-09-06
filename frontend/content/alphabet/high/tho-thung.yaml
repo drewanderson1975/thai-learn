@@ -1,0 +1,18 @@
+id: tho-thung
+glyph: "ถ"
+type: consonant
+consonantClass: High
+nameThai: "ถุง"
+nameRtgs: thung
+nameGloss: bag
+rtgs: th
+ipa: "/tʰ/"
+ipaNote: aspirated stop
+initial: "/tʰ/"
+final: "/t̚/"
+tip: "Aspirated ‘t’, like saying ‘top’ with a puff; final becomes unreleased /t/."
+audio:
+  glyph: "/assets/audio/letters/tho_thung.mp3"
+examples:
+  initialSamples: [word-thai]
+  finalSamples: [word-rotthap]

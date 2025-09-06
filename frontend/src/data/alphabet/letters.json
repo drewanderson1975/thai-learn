@@ -1,0 +1,722 @@
+[
+  {
+    "id": "cho-chang",
+    "glyph": "ช",
+    "type": "consonant",
+    "consonantClass": "High",
+    "nameThai": "ช้าง",
+    "nameRtgs": "chang",
+    "nameGloss": "elephant",
+    "rtgs": "ch",
+    "ipa": "/tɕʰ/",
+    "ipaNote": "aspirated affricate",
+    "initial": "/tɕʰ/",
+    "final": "/t̚/",
+    "tip": "Aspirated ‘ch’, like ‘church’; final becomes unreleased /t/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/cho_chang.mp3"
+    }
+  },
+  {
+    "id": "cho-ching",
+    "glyph": "ฉ",
+    "type": "consonant",
+    "consonantClass": "High",
+    "nameThai": "ฉิ่ง",
+    "nameRtgs": "ching",
+    "nameGloss": "cymbals",
+    "rtgs": "ch",
+    "ipa": "/tɕʰ/",
+    "ipaNote": "aspirated affricate",
+    "initial": "/tɕʰ/",
+    "final": "—",
+    "tip": "Aspirated 'ch' sound; occurs only at the beginning of words.",
+    "audio": {
+      "glyph": "/assets/audio/letters/cho_ching.mp3"
+    }
+  },
+  {
+    "id": "fo-fan",
+    "glyph": "ฝ",
+    "type": "consonant",
+    "consonantClass": "High",
+    "nameThai": "ฝา",
+    "nameRtgs": "fa",
+    "nameGloss": "lid",
+    "rtgs": "f",
+    "ipa": "/f/",
+    "ipaNote": "voiceless fricative",
+    "initial": "/f/",
+    "final": "—",
+    "tip": "Like English ‘f’, but cannot appear at the end of a word.",
+    "audio": {
+      "glyph": "/assets/audio/letters/fo_fan.mp3"
+    }
+  },
+  {
+    "id": "kho-khai",
+    "glyph": "ข",
+    "type": "consonant",
+    "consonantClass": "High",
+    "nameThai": "ไข่",
+    "nameRtgs": "khai",
+    "nameGloss": "egg",
+    "rtgs": "kh",
+    "ipa": "/kʰ/",
+    "ipaNote": "aspirated",
+    "initial": "/kʰ/ (aspirated)",
+    "final": "/k̚/ (unreleased stop)",
+    "tip": "Strong puff of air on the initial; final position becomes unreleased /k/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/kho_khai.mp3"
+    }
+  },
+  {
+    "id": "pho-phueng",
+    "glyph": "ผ",
+    "type": "consonant",
+    "consonantClass": "High",
+    "nameThai": "ผึ้ง",
+    "nameRtgs": "phueng",
+    "nameGloss": "bee",
+    "rtgs": "ph",
+    "ipa": "/pʰ/",
+    "ipaNote": "aspirated stop",
+    "initial": "/pʰ/",
+    "final": "—",
+    "tip": "Aspirated ‘p’; cannot occur at the end of words.",
+    "audio": {
+      "glyph": "/assets/audio/letters/pho_phueng.mp3"
+    }
+  },
+  {
+    "id": "so-rue-si",
+    "glyph": "ศ",
+    "type": "consonant",
+    "consonantClass": "High",
+    "nameThai": "ศาลา",
+    "nameRtgs": "sa-la",
+    "nameGloss": "pavilion",
+    "rtgs": "s",
+    "ipa": "/s/",
+    "ipaNote": "palatal fricative",
+    "initial": "/s/",
+    "final": "/t̚/",
+    "tip": "Another form of ‘s’; identical sound to ส and ษ.",
+    "audio": {
+      "glyph": "/assets/audio/letters/so_ruesi.mp3"
+    }
+  },
+  {
+    "id": "so-sala",
+    "glyph": "ษ",
+    "type": "consonant",
+    "consonantClass": "High",
+    "nameThai": "ฤๅษี",
+    "nameRtgs": "rue-si",
+    "nameGloss": "hermit",
+    "rtgs": "s",
+    "ipa": "/s/",
+    "ipaNote": "palatal fricative",
+    "initial": "/s/",
+    "final": "/t̚/",
+    "tip": "One of three letters for ‘s’ sound; final becomes unreleased /t/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/so_sala.mp3"
+    }
+  },
+  {
+    "id": "so-so",
+    "glyph": "ส",
+    "type": "consonant",
+    "consonantClass": "High",
+    "nameThai": "เสือ",
+    "nameRtgs": "suea",
+    "nameGloss": "tiger",
+    "rtgs": "s",
+    "ipa": "/s/",
+    "ipaNote": "voiceless fricative",
+    "initial": "/s/",
+    "final": "/t̚/",
+    "tip": "Clear ‘s’; final becomes unreleased /t/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/so_suea.mp3"
+    }
+  },
+  {
+    "id": "tho-thahan",
+    "glyph": "ท",
+    "type": "consonant",
+    "consonantClass": "High",
+    "nameThai": "ทหาร",
+    "nameRtgs": "thahan",
+    "nameGloss": "soldier",
+    "rtgs": "th",
+    "ipa": "/tʰ/",
+    "ipaNote": "aspirated stop",
+    "initial": "/tʰ/",
+    "final": "/t̚/",
+    "tip": "Aspirated ‘t’; final becomes unreleased /t/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/tho_thahan.mp3"
+    }
+  },
+  {
+    "id": "tho-thung",
+    "glyph": "ถ",
+    "type": "consonant",
+    "consonantClass": "High",
+    "nameThai": "ถุง",
+    "nameRtgs": "thung",
+    "nameGloss": "bag",
+    "rtgs": "th",
+    "ipa": "/tʰ/",
+    "ipaNote": "aspirated stop",
+    "initial": "/tʰ/",
+    "final": "/t̚/",
+    "tip": "Aspirated ‘t’, like saying ‘top’ with a puff; final becomes unreleased /t/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/tho_thung.mp3"
+    }
+  },
+  {
+    "id": "cho-chang",
+    "glyph": "ช",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "ช้าง",
+    "nameRtgs": "chang",
+    "nameGloss": "elephant",
+    "rtgs": "ch",
+    "ipa": "/tɕʰ/",
+    "ipaNote": "aspirated affricate",
+    "initial": "/tɕʰ/",
+    "final": "/t̚/",
+    "tip": "Aspirated ‘ch’ sound; final position changes to unreleased /t/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/cho_chang.mp3"
+    }
+  },
+  {
+    "id": "cho-choe",
+    "glyph": "ฌ",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "เฌอ",
+    "nameRtgs": "choe",
+    "nameGloss": "tree",
+    "rtgs": "ch",
+    "ipa": "/tɕʰ/",
+    "ipaNote": "aspirated",
+    "initial": "/tɕʰ/",
+    "final": "—",
+    "tip": "Rare aspirated ‘ch’ sound, mainly in Pali/Sanskrit loanwords.",
+    "audio": {
+      "glyph": "/assets/audio/letters/cho_choe.mp3"
+    }
+  },
+  {
+    "id": "fo-fan",
+    "glyph": "ฟ",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "ฟัน",
+    "nameRtgs": "fan",
+    "nameGloss": "tooth",
+    "rtgs": "f",
+    "ipa": "/f/",
+    "ipaNote": "voiceless fricative",
+    "initial": "/f/",
+    "final": "/p̚/ (unreleased stop)",
+    "tip": "Like English ‘f’; Thai does not allow /f/ finally—spelled ฟ at the end is pronounced as unreleased /p/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/fo_fan.mp3"
+    }
+  },
+  {
+    "id": "ho-nokhuk",
+    "glyph": "ฮ",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "นกฮูก",
+    "nameRtgs": "nok-huk",
+    "nameGloss": "owl",
+    "rtgs": "h",
+    "ipa": "/h/",
+    "ipaNote": "glottal fricative",
+    "initial": "/h/",
+    "final": "—",
+    "tip": "Like English ‘h’; typically occurs only at the start of a syllable.",
+    "audio": {
+      "glyph": "/assets/audio/letters/ho_nokhuk.mp3"
+    }
+  },
+  {
+    "id": "kho-khwai",
+    "glyph": "ค",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "ควาย",
+    "nameRtgs": "khwai",
+    "nameGloss": "buffalo",
+    "rtgs": "kh",
+    "ipa": "/kʰ/",
+    "ipaNote": "aspirated",
+    "initial": "/kʰ/",
+    "final": "/k̚/",
+    "tip": "Aspirated ‘kh’, like ‘k’ with a strong puff of air; final becomes unreleased /k/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/kho_khwai.mp3"
+    }
+  },
+  {
+    "id": "kho-rakhang",
+    "glyph": "ฆ",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "ระฆัง",
+    "nameRtgs": "rakhang",
+    "nameGloss": "bell",
+    "rtgs": "kh",
+    "ipa": "/kʰ/",
+    "ipaNote": "aspirated",
+    "initial": "/kʰ/",
+    "final": "/k̚/",
+    "tip": "Aspirated ‘kh’; final becomes unreleased /k/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/kho_rakhang.mp3"
+    }
+  },
+  {
+    "id": "lo-chula",
+    "glyph": "ฬ",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "จุฬา",
+    "nameRtgs": "chula",
+    "nameGloss": "kite (traditional)",
+    "rtgs": "l",
+    "ipa": "/l/",
+    "ipaNote": "lateral approximant",
+    "initial": "/l/",
+    "final": "/n/",
+    "tip": "An ‘l’ letter used mainly in Pali/Sanskrit loans; in final position it’s pronounced /n/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/lo_chula.mp3"
+    }
+  },
+  {
+    "id": "lo-ling",
+    "glyph": "ล",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "ลิง",
+    "nameRtgs": "ling",
+    "nameGloss": "monkey",
+    "rtgs": "l",
+    "ipa": "/l/",
+    "ipaNote": "lateral approximant",
+    "initial": "/l/",
+    "final": "/n/",
+    "tip": "Like English ‘l’; in final position it changes to /n/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/lo_ling.mp3"
+    }
+  },
+  {
+    "id": "mo-ma",
+    "glyph": "ม",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "ม้า",
+    "nameRtgs": "ma",
+    "nameGloss": "horse",
+    "rtgs": "m",
+    "ipa": "/m/",
+    "ipaNote": "bilabial nasal",
+    "initial": "/m/",
+    "final": "/m/",
+    "tip": "Like English ‘m’; same sound initially and finally.",
+    "audio": {
+      "glyph": "/assets/audio/letters/mo_ma.mp3"
+    }
+  },
+  {
+    "id": "ngo-ngoo",
+    "glyph": "ง",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "งู",
+    "nameRtgs": "ngu",
+    "nameGloss": "snake",
+    "rtgs": "ng",
+    "ipa": "/ŋ/",
+    "ipaNote": "velar nasal",
+    "initial": "/ŋ/",
+    "final": "/ŋ/",
+    "tip": "Like ‘ng’ in “sing”. Allowed at the start of words in Thai; same /ŋ/ sound word-finally.",
+    "audio": {
+      "glyph": "/assets/audio/letters/ngo_ngoo.mp3"
+    }
+  },
+  {
+    "id": "no-nen",
+    "glyph": "ณ",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "เณร",
+    "nameRtgs": "nen",
+    "nameGloss": "novice monk",
+    "rtgs": "n",
+    "ipa": "/n/",
+    "ipaNote": "alveolar nasal",
+    "initial": "/n/",
+    "final": "/n/",
+    "tip": "Like English ‘n’; used mostly in Pali/Sanskrit loanwords; same /n/ sound initially and finally.",
+    "audio": {
+      "glyph": "/assets/audio/letters/no_nen.mp3"
+    }
+  },
+  {
+    "id": "no-nu",
+    "glyph": "น",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "หนู",
+    "nameRtgs": "nu",
+    "nameGloss": "mouse",
+    "rtgs": "n",
+    "ipa": "/n/",
+    "ipaNote": "alveolar nasal",
+    "initial": "/n/",
+    "final": "/n/",
+    "tip": "Plain ‘n’ sound; very common in both initial and final positions.",
+    "audio": {
+      "glyph": "/assets/audio/letters/no_nu.mp3"
+    }
+  },
+  {
+    "id": "pho-phan",
+    "glyph": "พ",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "พาน",
+    "nameRtgs": "phan",
+    "nameGloss": "tray",
+    "rtgs": "ph",
+    "ipa": "/pʰ/",
+    "ipaNote": "aspirated stop",
+    "initial": "/pʰ/ (aspirated)",
+    "final": "/p̚/ (unreleased stop)",
+    "tip": "Aspirated ‘p’; in final position it reduces to unreleased /p/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/pho_phan.mp3"
+    }
+  },
+  {
+    "id": "pho-samphao",
+    "glyph": "ภ",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "สำเภา",
+    "nameRtgs": "samphao",
+    "nameGloss": "junk (ship)",
+    "rtgs": "ph",
+    "ipa": "/pʰ/",
+    "ipaNote": "aspirated stop",
+    "initial": "/pʰ/ (aspirated)",
+    "final": "/p̚/ (unreleased stop)",
+    "tip": "Aspirated ‘p’ like พ; mainly found in Pali/Sanskrit loanwords; final becomes unreleased /p/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/pho_samphao.mp3"
+    }
+  },
+  {
+    "id": "ro-ruea",
+    "glyph": "ร",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "เรือ",
+    "nameRtgs": "ruea",
+    "nameGloss": "boat",
+    "rtgs": "r",
+    "ipa": "/r/",
+    "ipaNote": "trilled / rolled",
+    "initial": "/r/",
+    "final": "/n/",
+    "tip": "Rolled/trilled ‘r’ sound; in final position it becomes /n/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/ro_ruea.mp3"
+    }
+  },
+  {
+    "id": "so-so",
+    "glyph": "ซ",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "โซ่",
+    "nameRtgs": "so",
+    "nameGloss": "chain",
+    "rtgs": "s",
+    "ipa": "/s/",
+    "ipaNote": "voiceless fricative",
+    "initial": "/s/",
+    "final": "/t̚/",
+    "tip": "Clear ‘s’ sound; final position becomes unreleased /t/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/so_so.mp3"
+    }
+  },
+  {
+    "id": "tho-thahan",
+    "glyph": "ท",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "ทหาร",
+    "nameRtgs": "thahan",
+    "nameGloss": "soldier",
+    "rtgs": "th",
+    "ipa": "/tʰ/",
+    "ipaNote": "aspirated stop",
+    "initial": "/tʰ/ (aspirated)",
+    "final": "/t̚/ (unreleased stop)",
+    "tip": "Aspirated ‘t’ (with a puff of air); in final position it reduces to unreleased /t/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/tho_thahan.mp3"
+    }
+  },
+  {
+    "id": "tho-thong",
+    "glyph": "ธ",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "ธง",
+    "nameRtgs": "thong",
+    "nameGloss": "flag",
+    "rtgs": "th",
+    "ipa": "/tʰ/",
+    "ipaNote": "aspirated stop",
+    "initial": "/tʰ/ (aspirated)",
+    "final": "/t̚/ (unreleased stop)",
+    "tip": "Same aspirated ‘t’ sound as ท; used in Pali/Sanskrit loans; final becomes unreleased /t/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/tho_thong.mp3"
+    }
+  },
+  {
+    "id": "wo-waen",
+    "glyph": "ว",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "แหวน",
+    "nameRtgs": "waen",
+    "nameGloss": "ring",
+    "rtgs": "w",
+    "ipa": "/w/",
+    "ipaNote": "labio-velar approximant",
+    "initial": "/w/",
+    "final": "/u/",
+    "tip": "Like English ‘w’; in final position it acts like vowel /u/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/wo_waen.mp3"
+    }
+  },
+  {
+    "id": "yo-yak",
+    "glyph": "ย",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "ยักษ์",
+    "nameRtgs": "yak",
+    "nameGloss": "giant",
+    "rtgs": "y",
+    "ipa": "/j/",
+    "ipaNote": "palatal approximant",
+    "initial": "/j/",
+    "final": "/i/",
+    "tip": "Sounds like ‘y’ in “yes”; final position acts like long /i/ vowel.",
+    "audio": {
+      "glyph": "/assets/audio/letters/yo_yak.mp3"
+    }
+  },
+  {
+    "id": "yo-ying",
+    "glyph": "ญ",
+    "type": "consonant",
+    "consonantClass": "Low",
+    "nameThai": "หญิง",
+    "nameRtgs": "ying",
+    "nameGloss": "woman",
+    "rtgs": "y",
+    "ipa": "/j/",
+    "ipaNote": "palatal approximant (historically /ɲ/)",
+    "initial": "/j/ (often pronounced like 'y')",
+    "final": "/n/",
+    "tip": "Often sounds like English ‘y’ at the start of a word; in final position it’s pronounced /n/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/yo_ying.mp3"
+    }
+  },
+  {
+    "id": "bo-baimai",
+    "glyph": "บ",
+    "type": "consonant",
+    "consonantClass": "Mid",
+    "nameThai": "ใบไม้",
+    "nameRtgs": "bai-mai",
+    "nameGloss": "leaf",
+    "rtgs": "b",
+    "ipa": "/b/",
+    "ipaNote": "voiced stop",
+    "initial": "/b/",
+    "final": "/p̚/",
+    "tip": "Like English ‘b’; final position becomes an unreleased /p/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/bo_baimai.mp3"
+    }
+  },
+  {
+    "id": "cho-chan",
+    "glyph": "จ",
+    "type": "consonant",
+    "consonantClass": "Mid",
+    "nameThai": "จาน",
+    "nameRtgs": "chan",
+    "nameGloss": "plate",
+    "rtgs": "ch",
+    "ipa": "/tɕ/",
+    "ipaNote": "affricate",
+    "initial": "/tɕ/",
+    "final": "/t̚/",
+    "tip": "Between ‘j’ and ‘ch’ (like ‘jungle’); final becomes unreleased /t/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/cho_chan.mp3"
+    }
+  },
+  {
+    "id": "do-cha-da",
+    "glyph": "ฎ",
+    "type": "consonant",
+    "consonantClass": "Mid",
+    "nameThai": "ชฎา",
+    "nameRtgs": "cha-da",
+    "nameGloss": "headdress",
+    "rtgs": "d",
+    "ipa": "/d/",
+    "ipaNote": "alveolar stop",
+    "initial": "/d/",
+    "final": "/t̚/",
+    "tip": "Sounds like a soft ‘d’; final becomes unreleased /t/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/do_chada.mp3"
+    }
+  },
+  {
+    "id": "do-dek",
+    "glyph": "ด",
+    "type": "consonant",
+    "consonantClass": "Mid",
+    "nameThai": "เด็ก",
+    "nameRtgs": "dek",
+    "nameGloss": "child",
+    "rtgs": "d",
+    "ipa": "/d/",
+    "ipaNote": "alveolar stop",
+    "initial": "/d/",
+    "final": "/t̚/",
+    "tip": "Hard ‘d’ sound; final position changes to unreleased /t/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/do_dek.mp3"
+    }
+  },
+  {
+    "id": "ko-kai",
+    "glyph": "ก",
+    "type": "consonant",
+    "consonantClass": "Mid",
+    "nameThai": "ไก่",
+    "nameRtgs": "kai",
+    "nameGloss": "chicken",
+    "rtgs": "k",
+    "ipa": "/k/",
+    "ipaNote": "unaspirated",
+    "initial": "/k/ (unaspirated)",
+    "final": "/k̚/ (unreleased stop)",
+    "tip": "Hard ‘g/k’ without a puff of air; final position becomes a clipped, unreleased /k/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/ko_kai.mp3"
+    }
+  },
+  {
+    "id": "o-ang",
+    "glyph": "อ",
+    "type": "consonant",
+    "consonantClass": "Mid",
+    "nameThai": "อ่าง",
+    "nameRtgs": "ang",
+    "nameGloss": "basin",
+    "rtgs": "o",
+    "ipa": "—",
+    "ipaNote": "carrier consonant / glottal stop",
+    "initial": "glottal stop /ʔ/ when no other consonant",
+    "final": "vowel support only",
+    "tip": "Acts as a silent carrier; provides support for vowels; initial position may create a glottal stop.",
+    "audio": {
+      "glyph": "/assets/audio/letters/o_ang.mp3"
+    }
+  },
+  {
+    "id": "po-pla",
+    "glyph": "ป",
+    "type": "consonant",
+    "consonantClass": "Mid",
+    "nameThai": "ปลา",
+    "nameRtgs": "pla",
+    "nameGloss": "fish",
+    "rtgs": "p",
+    "ipa": "/p/",
+    "ipaNote": "unaspirated",
+    "initial": "/p/",
+    "final": "/p̚/",
+    "tip": "Unaspirated ‘p’; shorter than English ‘p’; final becomes unreleased /p/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/po_pla.mp3"
+    }
+  },
+  {
+    "id": "to-patak",
+    "glyph": "ฏ",
+    "type": "consonant",
+    "consonantClass": "Mid",
+    "nameThai": "ปฏัก",
+    "nameRtgs": "pa-tak",
+    "nameGloss": "goad",
+    "rtgs": "t",
+    "ipa": "/t/",
+    "ipaNote": "unaspirated",
+    "initial": "/t/",
+    "final": "/t̚/",
+    "tip": "Unaspirated ‘t’; similar to English ‘stop’; final becomes unreleased /t/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/to_patak.mp3"
+    }
+  },
+  {
+    "id": "to-tao",
+    "glyph": "ต",
+    "type": "consonant",
+    "consonantClass": "Mid",
+    "nameThai": "เต่า",
+    "nameRtgs": "tao",
+    "nameGloss": "turtle",
+    "rtgs": "t",
+    "ipa": "/t/",
+    "ipaNote": "unaspirated",
+    "initial": "/t/",
+    "final": "/t̚/",
+    "tip": "Unaspirated ‘t’; shorter and harder than English ‘t’; final becomes unreleased /t/.",
+    "audio": {
+      "glyph": "/assets/audio/letters/to_tao.mp3"
+    }
+  }
+]

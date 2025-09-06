@@ -1,0 +1,18 @@
+id: bo-baimai
+glyph: "บ"
+type: consonant
+consonantClass: Mid
+nameThai: "ใบไม้"
+nameRtgs: bai-mai
+nameGloss: leaf
+rtgs: b
+ipa: "/b/"
+ipaNote: voiced stop
+initial: "/b/"
+final: "/p̚/"
+tip: "Like English ‘b’; final position becomes an unreleased /p/."
+audio:
+  glyph: "/assets/audio/letters/bo_baimai.mp3"
+examples:
+  initialSamples: [word-ban]
+  finalSamples: [word-rob]

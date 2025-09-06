@@ -1,0 +1,18 @@
+id: lo-ling
+glyph: "ล"
+type: consonant
+consonantClass: Low
+nameThai: "ลิง"
+nameRtgs: ling
+nameGloss: monkey
+rtgs: l
+ipa: "/l/"
+ipaNote: lateral approximant
+initial: "/l/"
+final: "/n/"
+tip: "Like English ‘l’; in final position it changes to /n/."
+audio:
+  glyph: "/assets/audio/letters/lo_ling.mp3"
+examples:
+  initialSamples: [word-luk]
+  finalSamples: [word-kon]

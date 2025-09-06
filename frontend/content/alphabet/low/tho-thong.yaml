@@ -1,0 +1,18 @@
+id: tho-thong
+glyph: "ธ"
+type: consonant
+consonantClass: Low
+nameThai: "ธง"
+nameRtgs: thong
+nameGloss: flag
+rtgs: th
+ipa: "/tʰ/"
+ipaNote: aspirated stop
+initial: "/tʰ/ (aspirated)"
+final: "/t̚/ (unreleased stop)"
+tip: "Same aspirated ‘t’ sound as ท; used in Pali/Sanskrit loans; final becomes unreleased /t/."
+audio:
+  glyph: "/assets/audio/letters/tho_thong.mp3"
+examples:
+  initialSamples: [word-thong]
+  finalSamples: [word-sawat]

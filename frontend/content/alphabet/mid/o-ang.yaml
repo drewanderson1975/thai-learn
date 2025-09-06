@@ -1,0 +1,18 @@
+id: o-ang
+glyph: "อ"
+type: consonant
+consonantClass: Mid
+nameThai: "อ่าง"
+nameRtgs: ang
+nameGloss: basin
+rtgs: o
+ipa: "—"
+ipaNote: carrier consonant / glottal stop
+initial: "glottal stop /ʔ/ when no other consonant"
+final: "vowel support only"
+tip: "Acts as a silent carrier; provides support for vowels; initial position may create a glottal stop."
+audio:
+  glyph: "/assets/audio/letters/o_ang.mp3"
+examples:
+  initialSamples: [word-aa]
+  finalSamples: []

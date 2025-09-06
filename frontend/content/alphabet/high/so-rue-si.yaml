@@ -1,0 +1,18 @@
+id: so-rue-si
+glyph: "ศ"
+type: consonant
+consonantClass: High
+nameThai: "ศาลา"
+nameRtgs: sa-la
+nameGloss: pavilion
+rtgs: s
+ipa: "/s/"
+ipaNote: palatal fricative
+initial: "/s/"
+final: "/t̚/"
+tip: "Another form of ‘s’; identical sound to ส and ษ."
+audio:
+  glyph: "/assets/audio/letters/so_ruesi.mp3"
+examples:
+  initialSamples: [word-sala]
+  finalSamples: [word-rot]

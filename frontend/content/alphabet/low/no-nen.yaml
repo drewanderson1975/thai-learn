@@ -1,0 +1,18 @@
+id: no-nen
+glyph: "ณ"
+type: consonant
+consonantClass: Low
+nameThai: "เณร"
+nameRtgs: nen
+nameGloss: novice monk
+rtgs: n
+ipa: "/n/"
+ipaNote: alveolar nasal
+initial: "/n/"
+final: "/n/"
+tip: "Like English ‘n’; used mostly in Pali/Sanskrit loanwords; same /n/ sound initially and finally."
+audio:
+  glyph: "/assets/audio/letters/no_nen.mp3"
+examples:
+  initialSamples: [word-natee]
+  finalSamples: [word-fan]

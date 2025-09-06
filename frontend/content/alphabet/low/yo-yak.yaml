@@ -1,0 +1,18 @@
+id: yo-yak
+glyph: "ย"
+type: consonant
+consonantClass: Low
+nameThai: "ยักษ์"
+nameRtgs: yak
+nameGloss: giant
+rtgs: y
+ipa: "/j/"
+ipaNote: palatal approximant
+initial: "/j/"
+final: "/i/"
+tip: "Sounds like ‘y’ in “yes”; final position acts like long /i/ vowel."
+audio:
+  glyph: "/assets/audio/letters/yo_yak.mp3"
+examples:
+  initialSamples: [word-yang]
+  finalSamples: [word-roy]

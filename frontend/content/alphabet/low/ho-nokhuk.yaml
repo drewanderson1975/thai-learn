@@ -1,0 +1,18 @@
+id: ho-nokhuk
+glyph: "ฮ"
+type: consonant
+consonantClass: Low
+nameThai: "นกฮูก"
+nameRtgs: nok-huk
+nameGloss: owl
+rtgs: h
+ipa: "/h/"
+ipaNote: glottal fricative
+initial: "/h/"
+final: "—"
+tip: "Like English ‘h’; typically occurs only at the start of a syllable."
+audio:
+  glyph: "/assets/audio/letters/ho_nokhuk.mp3"
+examples:
+  initialSamples: [word-hai]
+  finalSamples: []

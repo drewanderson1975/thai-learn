@@ -1,0 +1,18 @@
+id: do-cha-da
+glyph: "ฎ"
+type: consonant
+consonantClass: Mid
+nameThai: "ชฎา"
+nameRtgs: cha-da
+nameGloss: headdress
+rtgs: d
+ipa: "/d/"
+ipaNote: alveolar stop
+initial: "/d/"
+final: "/t̚/"
+tip: "Sounds like a soft ‘d’; final becomes unreleased /t/."
+audio:
+  glyph: "/assets/audio/letters/do_chada.mp3"
+examples:
+  initialSamples: [word-din]
+  finalSamples: [word-saad]

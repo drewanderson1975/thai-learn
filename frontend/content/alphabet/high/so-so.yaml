@@ -1,0 +1,18 @@
+id: so-so
+glyph: "ส"
+type: consonant
+consonantClass: High
+nameThai: "เสือ"
+nameRtgs: suea
+nameGloss: tiger
+rtgs: s
+ipa: "/s/"
+ipaNote: voiceless fricative
+initial: "/s/"
+final: "/t̚/"
+tip: "Clear ‘s’; final becomes unreleased /t/."
+audio:
+  glyph: "/assets/audio/letters/so_suea.mp3"
+examples:
+  initialSamples: [word-sawatdee]
+  finalSamples: [word-rat]

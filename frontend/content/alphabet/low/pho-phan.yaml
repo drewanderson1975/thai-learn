@@ -1,0 +1,18 @@
+id: pho-phan
+glyph: "พ"
+type: consonant
+consonantClass: Low
+nameThai: "พาน"
+nameRtgs: phan
+nameGloss: tray
+rtgs: ph
+ipa: "/pʰ/"
+ipaNote: aspirated stop
+initial: "/pʰ/ (aspirated)"
+final: "/p̚/ (unreleased stop)"
+tip: "Aspirated ‘p’; in final position it reduces to unreleased /p/."
+audio:
+  glyph: "/assets/audio/letters/pho_phan.mp3"
+examples:
+  initialSamples: [word-phom]
+  finalSamples: [word-khap]

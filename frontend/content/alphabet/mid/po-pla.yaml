@@ -1,0 +1,18 @@
+id: po-pla
+glyph: "ป"
+type: consonant
+consonantClass: Mid
+nameThai: "ปลา"
+nameRtgs: pla
+nameGloss: fish
+rtgs: p
+ipa: "/p/"
+ipaNote: unaspirated
+initial: "/p/"
+final: "/p̚/"
+tip: "Unaspirated ‘p’; shorter than English ‘p’; final becomes unreleased /p/."
+audio:
+  glyph: "/assets/audio/letters/po_pla.mp3"
+examples:
+  initialSamples: [word-phra]
+  finalSamples: [word-sap]

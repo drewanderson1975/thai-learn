@@ -1,0 +1,18 @@
+id: fo-fan
+glyph: "ฝ"
+type: consonant
+consonantClass: High
+nameThai: "ฝา"
+nameRtgs: fa
+nameGloss: lid
+rtgs: f
+ipa: "/f/"
+ipaNote: voiceless fricative
+initial: "/f/"
+final: "—"
+tip: "Like English ‘f’, but cannot appear at the end of a word."
+audio:
+  glyph: "/assets/audio/letters/fo_fan.mp3"
+examples:
+  initialSamples: [word-fan]
+  finalSamples: []

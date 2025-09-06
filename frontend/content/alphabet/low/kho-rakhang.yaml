@@ -1,0 +1,18 @@
+id: kho-rakhang
+glyph: "ฆ"
+type: consonant
+consonantClass: Low
+nameThai: "ระฆัง"
+nameRtgs: rakhang
+nameGloss: bell
+rtgs: kh
+ipa: "/kʰ/"
+ipaNote: aspirated
+initial: "/kʰ/"
+final: "/k̚/"
+tip: "Aspirated ‘kh’; final becomes unreleased /k/."
+audio:
+  glyph: "/assets/audio/letters/kho_rakhang.mp3"
+examples:
+  initialSamples: [word-khana]
+  finalSamples: [word-rot]

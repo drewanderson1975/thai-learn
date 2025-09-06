@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600&display=swap');
+@import "tailwindcss";
+
+/* Custom theme */
+@theme {
+  --color-primary: #1E40AF;   /* Deep Royal Blue */
+  --color-secondary: #0D9488; /* Teal */
+  --color-accent: #FACC15;    /* Golden Yellow */
+  --color-neutral: #334155;   /* Slate Gray */
+
+  --font-heading: "Inter", "Poppins", sans-serif;
+  --font-body: "Roboto", "Noto Sans", sans-serif;
+  --font-thai: "Sarabun", sans-serif;
+}
+
+body {
+  @apply font-body bg-white text-neutral;
+}
+
+h1, h2, h3, h4 {
+  @apply font-heading text-primary;
+}
+
+.thai-text {
+  @apply font-thai text-3xl font-semibold leading-snug text-primary;
+}
+
+.thai-glyph {
+  @apply font-thai text-5xl font-semibold leading-none;
+}
+
+

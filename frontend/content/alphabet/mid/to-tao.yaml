@@ -1,0 +1,18 @@
+id: to-tao
+glyph: "ต"
+type: consonant
+consonantClass: Mid
+nameThai: "เต่า"
+nameRtgs: tao
+nameGloss: turtle
+rtgs: t
+ipa: "/t/"
+ipaNote: unaspirated
+initial: "/t/"
+final: "/t̚/"
+tip: "Unaspirated ‘t’; shorter and harder than English ‘t’; final becomes unreleased /t/."
+audio:
+  glyph: "/assets/audio/letters/to_tao.mp3"
+examples:
+  initialSamples: [word-tam]
+  finalSamples: [word-phat]

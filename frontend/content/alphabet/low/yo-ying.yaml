@@ -1,0 +1,18 @@
+id: yo-ying
+glyph: "ญ"
+type: consonant
+consonantClass: Low
+nameThai: "หญิง"
+nameRtgs: ying
+nameGloss: woman
+rtgs: y
+ipa: "/j/"
+ipaNote: palatal approximant (historically /ɲ/)
+initial: "/j/ (often pronounced like 'y')"
+final: "/n/"
+tip: "Often sounds like English ‘y’ at the start of a word; in final position it’s pronounced /n/."
+audio:
+  glyph: "/assets/audio/letters/yo_ying.mp3"
+examples:
+  initialSamples: [word-ying]
+  finalSamples: [word-thaiy]

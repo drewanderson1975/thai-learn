@@ -1,0 +1,18 @@
+id: cho-chan
+glyph: "จ"
+type: consonant
+consonantClass: Mid
+nameThai: "จาน"
+nameRtgs: chan
+nameGloss: plate
+rtgs: ch
+ipa: "/tɕ/"
+ipaNote: affricate
+initial: "/tɕ/"
+final: "/t̚/"
+tip: "Between ‘j’ and ‘ch’ (like ‘jungle’); final becomes unreleased /t/."
+audio:
+  glyph: "/assets/audio/letters/cho_chan.mp3"
+examples:
+  initialSamples: [word-jaidee]
+  finalSamples: [word-raj]
