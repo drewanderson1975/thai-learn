@@ -12,8 +12,6 @@ const firebaseConfig = {
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
 };
 
-console.log("FIREBASE STORAGE BUCKET (from env)", firebaseConfig.storageBucket);
-
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
@@ -21,8 +19,6 @@ export const db = getFirestore(app);
 // 👇 force storage to the exact bucket from env
 const bucket = firebaseConfig.storageBucket;           // e.g. "thailearn-470919.appspot.com"
 export const storage = getStorage(app, `gs://${bucket}`);
-
-console.log("FIREBASE STORAGE USING", `gs://${bucket}`);
 
 
 
