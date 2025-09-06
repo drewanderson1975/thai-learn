@@ -113,16 +113,16 @@ export default function ThaiGlyphTile(props) {
       </div>
 
       {/* Tip */}
-      {tip && <p className="text-xs text-gray-700 text-left">{tip}</p>}
+      {tip && <p className="text-sm text-gray-700 text-left">{tip}</p>}
 
       {/* Audio */}
-      <audio controls src={src} className="w-full max-w-[280px] self-center" />
+      <audio controls src={src} className="w-full max-w-[280px] mx-auto" />
 
-      {/* Admin-only Edit button moved to bottom-right */}
+      {/* Admin-only Edit button moved to top-right */}
       {isAdmin && (
         <button
           onClick={() => setOpen(true)}
-          className="absolute right-2 bottom-2 z-10 rounded-md px-2 py-1 text-xs bg-primary/10 text-primary hover:bg-primary/20"
+          className="absolute right-2 top-2 z-10 rounded-md px-2 py-1 text-xs bg-primary/10 text-primary hover:bg-primary/20"
           title="Edit letter"
         >
           Edit
