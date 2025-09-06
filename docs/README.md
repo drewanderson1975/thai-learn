@@ -1,6 +1,6 @@
 # Thai Learn
 
-A website to teach **Thai and Isan** to English speakers.  
+A website to teach **Thai** to English speakers.  Potential include **Isan** at a later stage.
 The platform provides guided lessons, practice tools, and review systems to help learners build a strong foundation in the Thai and Isan languages.
 
 ---
