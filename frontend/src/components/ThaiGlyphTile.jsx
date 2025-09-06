@@ -161,7 +161,7 @@ export default function ThaiGlyphTile(props) {
       </div>
 
       {/* Footer anchored at bottom */}
-      <footer className="pt-3 border-t border-gray-200 flex flex-col items-center gap-2">
+      <footer lassName="mt-auto pt-3 flex items-center justify-between">
         <audio controls src={src} className="w-full max-w-[280px] mx-auto" />
       </footer>
 
