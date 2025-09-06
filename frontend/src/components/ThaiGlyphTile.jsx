@@ -115,8 +115,10 @@ export default function ThaiGlyphTile(props) {
       {/* Tip */}
       {tip && <p className="text-sm text-gray-700 text-left">{tip}</p>}
 
-      {/* Audio */}
-      <audio controls src={src} className="w-full max-w-[280px] mx-auto" />
+      {/* Footer with audio player */}
+      <footer className="mt-auto">
+        <audio controls src={src} className="w-full max-w-[280px] mx-auto" />
+      </footer>
 
       {/* Admin-only Edit button moved to top-right */}
       {isAdmin && (
