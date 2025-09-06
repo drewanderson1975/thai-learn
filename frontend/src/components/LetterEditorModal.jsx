@@ -3,14 +3,16 @@ import { db, storage } from "../lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-// --- Tiny tab button helper (was missing) ---
+// --- Tiny tab button helper ---
 function TabBtn({ active, onClick, children }) {
   return (
     <button
       type="button"
       onClick={onClick}
+      role="tab"
+      aria-selected={active}
       className={
-        "px-3 py-2 text-sm rounded-md " +
+        "px-3 py-2 text-sm rounded-md cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/50 " +
         (active ? "bg-primary/10 text-primary" : "text-gray-700 hover:bg-gray-100")
       }
     >
@@ -63,7 +65,6 @@ export default function LetterEditorModal({ open, onClose, letter }) {
   const [isRecording, setIsRecording] = useState(false);
 
   const [uploadPct, setUploadPct] = useState(0);
-
 
   useEffect(() => {
     setRecorderSupported(!!(navigator.mediaDevices && window.MediaRecorder));
@@ -128,91 +129,87 @@ export default function LetterEditorModal({ open, onClose, letter }) {
     return "webm";
   }
 
-
-
-async function onSave() {
-  const id = String(letter?.id || "").trim();
-  if (!id) {
-    alert("Missing letter id on this tile. (Parent must pass `id`.)");
-    return;
-  }
-
-  setSaving(true);
-  const started = performance.now();
-  console.log("[LetterEditor] Saving …", { id, note, noteStatus, audioStatus, hasFile: !!audioFile, audioUrl });
-
-  try {
-    // 1) Upload audio if we have a newly recorded/uploaded file
-    let publicAudioUrl = letter?.audio?.glyph || "";
-
-  if (audioFile) {
-    const type = audioFile.type || "audio/webm";
-    const ext =
-      type.includes("webm") ? "webm" :
-      type.includes("wav")  ? "wav"  :
-      (type.includes("mpeg") || type.includes("mp3")) ? "mp3" :
-      type.includes("ogg")  ? "ogg"  : "webm";
-
-    const safeId = id.replace(/[^a-z0-9_-]/gi, "_");
-    const filename = `${safeId}.${ext}`;
-    const file = audioFile instanceof File
-      ? audioFile
-      : new File([audioFile], filename, { type });
-
-    const path = `letters/${filename}`;
-    const storageRef = ref(storage, path);
-
-    console.log("[LetterEditor] Uploading (simple)…", { path, type, size: file.size });
-
-    if (!file.size) {
-      throw new Error("Recorded/uploaded audio file is empty (size=0). Did you stop recording?");
+  async function onSave() {
+    const id = String(letter?.id || "").trim();
+    if (!id) {
+      alert("Missing letter id on this tile. (Parent must pass `id`.)");
+      return;
     }
 
-    await withTimeout(uploadBytes(storageRef, file, { contentType: type }), 15000, "uploadBytes");
-    publicAudioUrl = await withTimeout(getDownloadURL(storageRef), 10000, "getDownloadURL");
-    console.log("[LetterEditor] Storage URL:", publicAudioUrl);
+    setSaving(true);
+    const started = performance.now();
+    console.log("[LetterEditor] Saving …", { id, note, noteStatus, audioStatus, hasFile: !!audioFile, audioUrl });
+
+    try {
+      // 1) Upload audio if we have a newly recorded/uploaded file
+      let publicAudioUrl = letter?.audio?.glyph || "";
+
+      if (audioFile) {
+        const type = audioFile.type || "audio/webm";
+        const ext =
+          type.includes("webm") ? "webm" :
+          type.includes("wav")  ? "wav"  :
+          (type.includes("mpeg") || type.includes("mp3")) ? "mp3" :
+          type.includes("ogg")  ? "ogg"  : "webm";
+
+        const safeId = id.replace(/[^a-z0-9_-]/gi, "_");
+        const filename = `${safeId}.${ext}`;
+        const file = audioFile instanceof File
+          ? audioFile
+          : new File([audioFile], filename, { type });
+
+        const path = `letters/${filename}`;
+        const storageRef = ref(storage, path);
+
+        console.log("[LetterEditor] Uploading (simple)…", { path, type, size: file.size });
+
+        if (!file.size) {
+          throw new Error("Recorded/uploaded audio file is empty (size=0). Did you stop recording?");
+        }
+
+        await withTimeout(uploadBytes(storageRef, file, { contentType: type }), 15000, "uploadBytes");
+        publicAudioUrl = await withTimeout(getDownloadURL(storageRef), 10000, "getDownloadURL");
+        console.log("[LetterEditor] Storage URL:", publicAudioUrl);
+      }
+
+      // 2) Build Firestore payload
+      const letterStatus =
+        (noteStatus === "Done" && audioStatus === "Done")
+          ? "Complete"
+          : (noteStatus === "Being reviewed" || audioStatus === "Being reviewed")
+          ? "In progress"
+          : "Outstanding";
+
+      const payload = {
+        id,
+        tip: note,
+        audio: {
+          ...(letter?.audio || {}),
+          glyph: publicAudioUrl || letter?.audio?.glyph || "",
+          source: audioFile ? "human" : (letter?.audio?.source || "tts"),
+          updatedAt: new Date().toISOString(),
+        },
+        review: {
+          noteStatus,
+          audioStatus,
+          letterStatus,
+          updatedAt: new Date().toISOString(),
+        },
+      };
+
+      console.log("[LetterEditor] Writing Firestore …", { id, payload });
+      await withTimeout(setDoc(doc(db, "letters", id), payload, { merge: true }), 12000, "setDoc");
+      console.log("✅ Saved to Firestore in", Math.round(performance.now() - started), "ms");
+
+      setSaving(false);
+      onClose?.();
+      setAudioFile(null);
+    } catch (e) {
+      console.error("❌ Save failed:", e);
+      setSaving(false);
+      alert(`Save failed: ${e.code || ""} ${e.message || e}`);
+    }
   }
-
-
-
-    // 2) Build Firestore payload
-    const letterStatus =
-      (noteStatus === "Done" && audioStatus === "Done")
-        ? "Complete"
-        : (noteStatus === "Being reviewed" || audioStatus === "Being reviewed")
-        ? "In progress"
-        : "Outstanding";
-
-    const payload = {
-      id,
-      tip: note,
-      audio: {
-        ...(letter?.audio || {}),
-        glyph: publicAudioUrl || letter?.audio?.glyph || "",
-        source: audioFile ? "human" : (letter?.audio?.source || "tts"),
-        updatedAt: new Date().toISOString(),
-      },
-      review: {
-        noteStatus,
-        audioStatus,
-        letterStatus,
-        updatedAt: new Date().toISOString(),
-      },
-    };
-
-    console.log("[LetterEditor] Writing Firestore …", { id, payload });
-    await withTimeout(setDoc(doc(db, "letters", id), payload, { merge: true }), 12000, "setDoc");
-    console.log("✅ Saved to Firestore in", Math.round(performance.now() - started), "ms");
-
-    setSaving(false);
-    onClose?.();
-    setAudioFile(null);
-  } catch (e) {
-    console.error("❌ Save failed:", e);
-    setSaving(false);
-    alert(`Save failed: ${e.code || ""} ${e.message || e}`);
-  }
-}
 
   if (!open) return null;
 
@@ -248,7 +245,7 @@ async function onSave() {
             <button
               type="button"
               onClick={onClose}
-              className="rounded-md px-3 py-1 text-sm text-gray-600 hover:bg-gray-100"
+              className="rounded-md px-3 py-1 text-sm text-gray-600 hover:bg-gray-100 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/50"
             >
               Close
             </button>
@@ -257,7 +254,7 @@ async function onSave() {
 
         {/* tabs */}
         <div className="px-5 pt-4">
-          <div className="flex gap-2">
+          <div className="flex gap-2" role="tablist" aria-label="Letter editor tabs">
             <TabBtn active={tab === "note"} onClick={() => setTab("note")}>Note</TabBtn>
             <TabBtn active={tab === "audio"} onClick={() => setTab("audio")}>Audio</TabBtn>
             <TabBtn active={tab === "status"} onClick={() => setTab("status")}>Status</TabBtn>
@@ -279,7 +276,7 @@ async function onSave() {
               <div className="flex items-center gap-3">
                 <label className="text-sm text-gray-700">Note status</label>
                 <select
-                  className="rounded-md border px-2 py-1 text-sm"
+                  className="rounded-md border px-2 py-1 text-sm cursor-pointer"
                   value={noteStatus}
                   onChange={(e) => setNoteStatus(e.target.value)}
                 >
@@ -299,7 +296,7 @@ async function onSave() {
                     type="button"
                     onClick={isRecording ? stopRecording : startRecording}
                     className={
-                      "rounded-md px-3 py-2 text-sm " +
+                      "rounded-md px-3 py-2 text-sm cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/50 " +
                       (isRecording ? "bg-rose-600 text-white" : "bg-primary/10 text-primary hover:bg-primary/20")
                     }
                     title={isRecording ? "Stop recording" : "Record from mic"}
@@ -308,7 +305,7 @@ async function onSave() {
                     {isRecording ? "Stop" : "Record"}
                   </button>
 
-                  <label className="rounded-md px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 cursor-pointer">
+                  <label className="rounded-md px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 cursor-pointer focus-within:outline focus-within:outline-2 focus-within:outline-primary/50">
                     Upload
                     <input type="file" accept="audio/*" onChange={onPickFile} className="hidden" />
                   </label>
@@ -317,7 +314,7 @@ async function onSave() {
                 <div className="flex items-center gap-2">
                   <label className="text-sm text-gray-700">Audio status</label>
                   <select
-                    className="rounded-md border px-2 py-1 text-sm"
+                    className="rounded-md border px-2 py-1 text-sm cursor-pointer"
                     value={audioStatus}
                     onChange={(e) => setAudioStatus(e.target.value)}
                   >
@@ -337,7 +334,7 @@ async function onSave() {
                   <button
                     type="button"
                     onClick={playPause}
-                    className="rounded-md px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200"
+                    className="rounded-md px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/50"
                     disabled={!audioUrl}
                   >
                     Play/Pause
@@ -357,7 +354,7 @@ async function onSave() {
                 <div className="rounded-lg border p-4">
                   <div className="text-sm font-medium text-gray-700 mb-2">Note status</div>
                   <select
-                    className="w-full rounded-md border px-2 py-1 text-sm"
+                    className="w-full rounded-md border px-2 py-1 text-sm cursor-pointer"
                     value={noteStatus}
                     onChange={(e) => setNoteStatus(e.target.value)}
                   >
@@ -370,7 +367,7 @@ async function onSave() {
                 <div className="rounded-lg border p-4">
                   <div className="text-sm font-medium text-gray-700 mb-2">Audio status</div>
                   <select
-                    className="w-full rounded-md border px-2 py-1 text-sm"
+                    className="w-full rounded-md border px-2 py-1 text-sm cursor-pointer"
                     value={audioStatus}
                     onChange={(e) => setAudioStatus(e.target.value)}
                   >
@@ -408,14 +405,20 @@ async function onSave() {
         <div className="flex items-center justify-between px-5 py-4 border-t">
           <div className="text-xs text-gray-500">{saving ? "Saving…" : " "}</div>
           <div className="flex items-center gap-2">
-            <button type="button" onClick={onClose} className="rounded-md px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <button
+              type="button"
+              onClick={onClose}
+              className="rounded-md px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/50"
+            >
               Cancel
             </button>
             <button
               type="button"
               onClick={onSave}
               disabled={saving}
-              className={`rounded-md px-4 py-2 text-sm bg-primary text-white hover:bg-primary/90 ${saving ? "opacity-60 cursor-not-allowed" : ""}`}
+              className={`rounded-md px-4 py-2 text-sm bg-primary text-white hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary/50 ${
+                saving ? "opacity-60 cursor-not-allowed" : "cursor-pointer"
+              }`}
             >
               {saving ? "Saving…" : "Save"}
             </button>
