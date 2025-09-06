@@ -83,7 +83,35 @@ It ensures consistency when using AI tools, coding, or contributing to the proje
 
 ## 6. Decision Logging
 - All major decisions documented in `CHANGELOG.md`.  
-- Include **what decision was made** and **why** (e.g., “Firebase chosen over Auth0 for simplicity”).  
+- Include **what decision was made** and **why** (e.g., “Firebase chosen over Auth0 for simplicity”).
+
+- ---
+
+## 7. Documentation Commit Tags
+To keep documentation updates clear in Git history, use the following commit message prefixes:
+
+- **[docs:readme]** → updates to `README.md`  
+  - Example: `[docs:readme] add Isan to project scope section`  
+
+- **[docs:summary]** → updates to `PROJECT_SUMMARY.md`  
+  - Example: `[docs:summary] log Firebase audio integration progress`  
+
+- **[docs:guidelines]** → updates to `PROJECT_GUIDELINES.md`  
+  - Example: `[docs:guidelines] add button accent color rule`  
+
+- **[docs:context]** → updates to `PROJECT_CONTEXT.md`  
+  - Example: `[docs:context] add reference to DOCS_CHECKLIST.md`  
+
+- **[docs:checklist]** → updates to `DOCS_CHECKLIST.md`  
+  - Example: `[docs:checklist] clarify when to update summary file`  
+
+### Rules
+- Always place the tag at the **start** of the commit message.  
+- Keep the rest of the message short and descriptive.  
+- If multiple docs are updated, either:  
+  - Use a broader tag like `[docs] update summary and guidelines`, or  
+  - Make two commits if the updates are unrelated.  
+
 
 ---
 
