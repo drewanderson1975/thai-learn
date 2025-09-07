@@ -154,10 +154,10 @@ scripts/output.mp3
 scripts/package-lock.json
 scripts/package.json
 scripts/single-d.cjs
-servers/.env.sample
-servers/index.js
-servers/package.json
-servers/tts.js
+server/.env.sample
+server/index.js
+server/package.json
+server/tts.js
 
 
 ```
