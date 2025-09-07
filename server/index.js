@@ -32,7 +32,7 @@ app.post('/api/synth', async (req, res) => {
   }
 })
 
-const PORT = process.env.PORT || 5174
+const PORT = process.env.PORT || 8787
 app.listen(PORT, () => {
   console.log(`TTS server listening on http://localhost:${PORT}`)
 })
