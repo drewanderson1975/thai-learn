@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "tailwind": "tailwindcss",
-    "build:content": "node ./scripts/build-content.mjs"
+    "build:content": "node ./scripts/build-content.mjs",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "firebase": "^12.2.1",
@@ -32,6 +33,7 @@
     "tailwindcss": "^4.1.12",
     "vite": "^7.1.2",
     "yaml": "^2.8.1",
-    "zod": "^4.1.5"
+    "zod": "^4.1.5",
+    "typescript": "^5.5.0"
   }
 }
