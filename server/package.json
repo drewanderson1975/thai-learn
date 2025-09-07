@@ -1,7 +1,6 @@
 {
   "name": "server",
   "private": true,
-  "type": "module",
   "version": "0.1.0",
   "description": "Express API for Google Cloud Text-to-Speech (Thai voices only)",
   "scripts": {
