@@ -23,3 +23,12 @@
 - Don’t create new services or secrets.
 - Don’t touch infra/CI outside documented files.
 - Don’t reformat the whole repo.
+
+- ## DoD (AI)
+A task is “done” when:
+1) Acceptance criteria met.
+2) Code builds; format, lint, unit tests pass.
+3) PR opened using template with evidence.
+4) Docs updated.
+5) No repo-wide reformatting; changes are scoped.
+
