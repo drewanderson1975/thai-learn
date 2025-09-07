@@ -20,7 +20,7 @@ It ensures consistency when using AI tools, coding, or contributing to the proje
 ## 2. Design System
 ### Layout
 - Grid-based, clean, accessible.  
-- Navigation: `Lessons | Review | Progress`.  
+- Navigation: `Lessons | Alphabet | Words | Phrases |Progress`.  
 - Content displayed in **cards** for lessons, quizzes, reviews.  
 
 ### Colors
@@ -60,7 +60,7 @@ It ensures consistency when using AI tools, coding, or contributing to the proje
   - Use **React + Tailwind**.  
   - Follow **design system** (colors, fonts, layout).  
   - Maintain **coding standards** (naming conventions, structure).  
-- AI-generated code must be **reviewed and tested** before committing.  
+- AI Operating Rules should be followed, refer to "COPILOT.md" document 
 - Commit messages should be descriptive, e.g.:  
   - `Add LessonCard component (React + Tailwind, per design system)`  
 
