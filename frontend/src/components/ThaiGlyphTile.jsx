@@ -2,6 +2,7 @@ import InfoPopover from "./InfoPopover";
 import { useState, useMemo, useRef, useEffect } from "react";
 import LetterEditorModal from "./LetterEditorModal";
 import { useIsAdmin } from "./AdminGate"; // adjust path if needed
+import { Badge, Button, Card } from "../design-system";
 
 // --- Custom playback speed control (matches LetterEditorModal) ---
 function SpeedControl({ audioRef, disabled }) {
@@ -65,18 +66,24 @@ function SpeedControl({ audioRef, disabled }) {
   );
 }
 
-const classBadge = (consonantClass) =>
-  consonantClass === "High"
-    ? "bg-rose-100 text-rose-700"
-    : consonantClass === "Mid"
-    ? "bg-blue-100 text-blue-700"
-    : "bg-emerald-100 text-emerald-700"; // Low
+// Map consonant class to badge variant
+const classBadgeVariant = (consonantClass) => {
+  switch (consonantClass) {
+    case "High": return "high";
+    case "Mid": return "mid";
+    case "Low": return "low";
+    default: return "secondary";
+  }
+};
 
-// Map status -> pill styles
-const statusStyles = {
-  Outstanding: "bg-amber-100 text-amber-700",
-  "In progress": "bg-blue-100 text-blue-700",
-  Complete: "bg-emerald-100 text-emerald-700",
+// Map status to badge variant
+const statusBadgeVariant = (status) => {
+  switch (status) {
+    case "Outstanding": return "outstanding";
+    case "In progress": return "inProgress";
+    case "Complete": return "complete";
+    default: return "secondary";
+  }
 };
 
 export default function ThaiGlyphTile(props) {
@@ -137,51 +144,42 @@ export default function ThaiGlyphTile(props) {
   const audioEl = useRef(null);
 
   return (
-    <div
-      className="
-        relative rounded-2xl border border-gray-200 p-4
-        grid grid-rows-[auto,1fr,auto] gap-2 h-full bg-white
-      "
+    <Card 
+      size="md"
+      className="relative grid grid-rows-[auto,1fr,auto] gap-2 h-full"
     >
       {/* Header row: left (badges) / right (Edit + Info) */}
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-2">
-          <span
-            className={`text-xs font-semibold px-2 py-0.5 rounded-full ${classBadge(
-              consonantClass
-            )}`}
+          <Badge
+            variant={classBadgeVariant(consonantClass)}
+            size="sm"
           >
             {consonantClass} class
-          </span>
+          </Badge>
 
           {/* Admin-only overall status pill */}
           {isAdmin && (
-            <span
-              className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
-                statusStyles[overallStatus] || "bg-gray-100 text-gray-700"
-              }`}
+            <Badge
+              variant={statusBadgeVariant(overallStatus)}
+              size="sm"
               title="Overall review status"
             >
               {overallStatus}
-            </span>
+            </Badge>
           )}
         </div>
 
         <div className="flex items-center gap-2">
           {isAdmin && (
-            <button
-              type="button"
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={() => setOpen(true)}
-              className="
-                rounded-md px-2 py-1 text-xs bg-primary/10 text-primary
-                hover:bg-primary/20 focus-visible:outline focus-visible:outline-2
-                focus-visible:outline-primary/50 focus-visible:ring-0
-                transition-colors cursor-pointer
-              "
               aria-label="Edit letter"
             >
               Edit
-            </button>
+            </Button>
           )}
 
           {/* Info icon / popover trigger (ensure InfoPopover applies aria-label to its trigger) */}
@@ -248,6 +246,6 @@ export default function ThaiGlyphTile(props) {
         onClose={() => setOpen(false)}
         letter={letterForEditor}
       />
-    </div>
+    </Card>
   );
 }
