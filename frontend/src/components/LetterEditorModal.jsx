@@ -153,6 +153,21 @@ function SpeedControl({ audioRef, disabled }) {
   );
 }
 
+/** ---------------- Thai TTS helper ---------------- **/
+const THAI_CONSONANT_RE = /^[\u0E01-\u0E2E]$/; // ก (0E01) .. ฮ (0E2E); excludes vowels/marks
+function buildLetterTtsText(letter) {
+  const glyph = letter?.glyph || "";
+  // Respect an explicit override if present
+  if (letter?.ttsText && String(letter.ttsText).trim()) return letter.ttsText.trim();
+  // Optional: if you prefer not to duplicate อ as ออ, uncomment the next line:
+  // if (glyph === "อ") return glyph;
+  // If it's a single Thai consonant, synthesize as (consonant)+อ, e.g., ก → กอ
+  if (glyph.length === 1 && THAI_CONSONANT_RE.test(glyph)) {
+    return `${glyph}อ`;
+  }
+  return glyph;
+}
+
 /** ---------------- Main component ---------------- **/
 export default function LetterEditorModal({ open, onClose, letter }) {
   // Lock background scroll when modal is open
@@ -369,7 +384,10 @@ export default function LetterEditorModal({ open, onClose, letter }) {
     try {
       setTtsBusy(true);
       setVoiceError("");
-      const text = letter?.ttsText || letter?.glyph || ""; // prefer a dedicated ttsText if you have one
+
+      // 🔹 Use glyph+อ for Thai consonants by default (or a saved override if present)
+      const text = buildLetterTtsText(letter);
+
       const r = await fetch("/api/tts/synthesize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -383,9 +401,9 @@ export default function LetterEditorModal({ open, onClose, letter }) {
       if (!r.ok) throw new Error(`TTS error ${r.status}`);
       const blob = await r.blob(); // e.g., audio/mp3 or audio/wav
       const url = URL.createObjectURL(blob);
-      // Set URL for preview, but *do not* mark as final until user clicks "Use this audio"
+      // Set URL for preview, but *do not* mark as final until user clicks "Save"
       setAudioUrl(url);
-      // Stash blob so Save uploads it if they choose "Use this audio"
+      // Stash blob so Save uploads it if they choose "Save"
       setAudioFile(blob);
       setAudioStatus("Being reviewed");
     } catch (e) {
@@ -780,7 +798,10 @@ export default function LetterEditorModal({ open, onClose, letter }) {
                       {ttsBusy ? "Generating…" : "Preview with selected voice"}
                     </button>
                     <span className="text-xs text-gray-500">
-                      Text used: <code className="bg-gray-50 px-1 py-0.5 rounded">{letter?.ttsText || letter?.glyph || "—"}</code>
+                      Text used:{" "}
+                      <code className="bg-gray-50 px-1 py-0.5 rounded">
+                        {buildLetterTtsText(letter) || "—"}
+                      </code>
                     </span>
                   </div>
                 </div>
