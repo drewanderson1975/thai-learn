@@ -11,7 +11,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:5174', // Express TTS server
+        target: 'http://localhost:8787', // Express TTS server
         changeOrigin: true,
       }
     }
