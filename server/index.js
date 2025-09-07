@@ -2,9 +2,8 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const morgan = require("morgan");
 
-// ✅ Use your real TTS helpers (Thai-only voices + caching)
+// ✅ Use your real TTS helpers
 const { listVoices, synthesize } = require("./tts");
 
 const app = express();
@@ -12,9 +11,8 @@ const app = express();
 // --- Middleware ---
 app.use(cors()); // keep permissive in dev; tighten in prod
 app.use(bodyParser.json({ limit: "1mb" }));
-app.use(morgan("dev"));
 
-// --- Health ---
+// --- Health check ---
 app.get("/api/health", (_req, res) => res.json({ ok: true }));
 
 // --- Voices (Thai-only; cached in tts.js) ---
