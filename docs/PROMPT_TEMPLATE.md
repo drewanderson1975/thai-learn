@@ -1,5 +1,5 @@
 ### AI TASK
-**Project Guildlines:** Always condult the following documents: COPILOT.md, PROJECT_CONTEXT.md, PROJECT_GUIDELINES.md, PROJECT_SUMMARY.md, README.md
+**Project Guildlines:** Always consult the following documents: COPILOT.md, PROJECT_CONTEXT.md, PROJECT_GUIDELINES.md, PROJECT_SUMMARY.md, README.md
 **Authority:** Level 2 (branch, edit, commit, open PR).
 **Goal:** <one sentence>
 **Scope (files/areas):** <paths or modules>
