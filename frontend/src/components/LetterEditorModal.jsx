@@ -3,7 +3,7 @@ import { db, storage } from "../lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-// --- Tiny tab button helper ---
+/** ---------------- Tab button ---------------- **/
 function TabBtn({ active, onClick, children }) {
   return (
     <button
@@ -21,6 +21,7 @@ function TabBtn({ active, onClick, children }) {
   );
 }
 
+/** ---------------- Utilities ---------------- **/
 function withTimeout(promise, ms, label) {
   return Promise.race([
     promise,
@@ -36,7 +37,64 @@ function deriveOverall(noteStatus, audioStatus) {
   return "Outstanding";
 }
 
-// --- Playback speed control (custom, consistent across sources/browsers) ---
+/** WAV encoder for an AudioBuffer (44.1kHz+). */
+function audioBufferToWav(buffer) {
+  const numOfChan = buffer.numberOfChannels;
+  const sampleRate = buffer.sampleRate;
+  const length = buffer.length * numOfChan * 2 + 44;
+  const bufferArray = new ArrayBuffer(length);
+  const view = new DataView(bufferArray);
+
+  let offset = 0;
+
+  function writeString(s) {
+    for (let i = 0; i < s.length; i++) view.setUint8(offset + i, s.charCodeAt(i));
+    offset += s.length;
+  }
+
+  function floatTo16BitPCM(output, offsetPCM, input) {
+    for (let i = 0; i < input.length; i++, offsetPCM += 2) {
+      const s = Math.max(-1, Math.min(1, input[i]));
+      output.setInt16(offsetPCM, s < 0 ? s * 0x8000 : s * 0x7fff, true);
+    }
+  }
+
+  writeString("RIFF");
+  view.setUint32(offset, length - 8, true); offset += 4;
+  writeString("WAVE");
+  writeString("fmt ");
+  view.setUint32(offset, 16, true); offset += 4;
+  view.setUint16(offset, 1, true); offset += 2; // PCM
+  view.setUint16(offset, numOfChan, true); offset += 2;
+  view.setUint32(offset, sampleRate, true); offset += 4;
+  view.setUint32(offset, sampleRate * numOfChan * 2, true); offset += 4;
+  view.setUint16(offset, numOfChan * 2, true); offset += 2;
+  view.setUint16(offset, 16, true); offset += 2;
+  writeString("data");
+  view.setUint32(offset, length - 44, true); offset += 4;
+
+  const channels = [];
+  for (let i = 0; i < numOfChan; i++) channels.push(buffer.getChannelData(i));
+
+  let interleaved;
+  if (numOfChan === 2) {
+    const L = channels[0], R = channels[1];
+    interleaved = new Float32Array(L.length + R.length);
+    let idx = 0, inputIdx = 0;
+    while (idx < interleaved.length) {
+      interleaved[idx++] = L[inputIdx];
+      interleaved[idx++] = R[inputIdx];
+      inputIdx++;
+    }
+  } else {
+    interleaved = channels[0];
+  }
+
+  floatTo16BitPCM(view, offset, interleaved);
+  return bufferArray;
+}
+
+/** ---------------- Playback speed control ---------------- **/
 function SpeedControl({ audioRef, disabled }) {
   const [open, setOpen] = useState(false);
   const [rate, setRate] = useState(1);
@@ -46,10 +104,10 @@ function SpeedControl({ audioRef, disabled }) {
     if (audioRef?.current) audioRef.current.playbackRate = rate;
   }, [rate, audioRef]);
 
-  // Re-apply current rate when src changes (e.g., record -> upload URL)
   useEffect(() => {
     if (audioRef?.current) audioRef.current.playbackRate = rate;
-  }, [audioRef?.current?.src]); // eslint-disable-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [audioRef?.current?.src]);
 
   return (
     <div className="relative">
@@ -69,10 +127,7 @@ function SpeedControl({ audioRef, disabled }) {
       </button>
 
       {open && !disabled && (
-        <ul
-          role="listbox"
-          className="absolute right-0 mt-1 w-28 rounded-md border bg-white shadow-lg z-10 py-1"
-        >
+        <ul role="listbox" className="absolute right-0 mt-1 w-28 rounded-md border bg-white shadow-lg z-10 py-1">
           {rates.map((r) => (
             <li key={r}>
               <button
@@ -98,6 +153,22 @@ function SpeedControl({ audioRef, disabled }) {
   );
 }
 
+/** ---------------- Thai TTS helper ---------------- **/
+const THAI_CONSONANT_RE = /^[\u0E01-\u0E2E]$/; // ก (0E01) .. ฮ (0E2E); excludes vowels/marks
+function buildLetterTtsText(letter) {
+  const glyph = letter?.glyph || "";
+  // Respect an explicit override if present
+  if (letter?.ttsText && String(letter.ttsText).trim()) return letter.ttsText.trim();
+  // Optional: if you prefer not to duplicate อ as ออ, uncomment the next line:
+  // if (glyph === "อ") return glyph;
+  // If it's a single Thai consonant, synthesize as (consonant)+อ, e.g., ก → กอ
+  if (glyph.length === 1 && THAI_CONSONANT_RE.test(glyph)) {
+    return `${glyph}อ`;
+  }
+  return glyph;
+}
+
+/** ---------------- Main component ---------------- **/
 export default function LetterEditorModal({ open, onClose, letter }) {
   // Lock background scroll when modal is open
   useEffect(() => {
@@ -120,6 +191,14 @@ export default function LetterEditorModal({ open, onClose, letter }) {
   const [audioStatus, setAudioStatus] = useState(letter?.review?.audioStatus || "Outstanding");
   const audioEl = useRef(null);
 
+  // for reset if user clips then wants to revert (this session only)
+  const originalUrlRef = useRef(null);
+  useEffect(() => {
+    if (open) {
+      originalUrlRef.current = letter?.audio?.glyph || "";
+    }
+  }, [open, letter?.audio?.glyph]);
+
   // MediaRecorder
   const [recorderSupported, setRecorderSupported] = useState(false);
   const mediaRecorderRef = useRef(null);
@@ -140,7 +219,7 @@ export default function LetterEditorModal({ open, onClose, letter }) {
         const blob = new Blob(chunksRef.current, { type: "audio/webm;codecs=opus" });
         const url = URL.createObjectURL(blob);
         setAudioUrl(url);
-        setAudioFile(blob);   // keep the blob for upload
+        setAudioFile(blob);
         setAudioStatus("Being reviewed");
         if (mr.stream) mr.stream.getTracks().forEach((t) => t.stop());
       };
@@ -179,6 +258,163 @@ export default function LetterEditorModal({ open, onClose, letter }) {
     return letter?.review?.letterStatus || deriveOverall(noteStatus, audioStatus);
   }, [letter?.review?.letterStatus, noteStatus, audioStatus]);
 
+  /** ------------ Audio clipping state & logic ------------ **/
+  const [duration, setDuration] = useState(0);
+  const [clipStart, setClipStart] = useState(0);
+  const [clipEnd, setClipEnd] = useState(0);
+  const [clipping, setClipping] = useState(false);
+
+  useEffect(() => {
+    const el = audioEl.current;
+    if (!el) return;
+    const onLoaded = () => {
+      const d = Number.isFinite(el.duration) ? el.duration : 0;
+      setDuration(d || 0);
+      setClipStart(0);
+      setClipEnd(d || 0);
+    };
+    el.addEventListener("loadedmetadata", onLoaded);
+    return () => el.removeEventListener("loadedmetadata", onLoaded);
+  }, [audioUrl]);
+
+  function setStartToCurrent() {
+    if (!audioEl.current) return;
+    const t = Math.max(0, Math.min(audioEl.current.currentTime, clipEnd));
+    setClipStart(t);
+  }
+
+  function setEndToCurrent() {
+    if (!audioEl.current) return;
+    const t = Math.min(duration, Math.max(audioEl.current.currentTime, clipStart));
+    setClipEnd(t);
+  }
+
+  async function applyClip() {
+    if (!audioUrl || clipEnd <= clipStart) {
+      alert("Invalid clip range.");
+      return;
+    }
+    try {
+      setClipping(true);
+      // Fetch the current audio (works for https: and blob:)
+      const res = await fetch(audioUrl);
+      const arr = await res.arrayBuffer();
+
+      const ctx = new (window.OfflineAudioContext || window.webkitOfflineAudioContext)(
+        1,  // we'll render mono to keep file small; original channel count is preserved only for 2+ if desired
+        44100 * (clipEnd - clipStart),
+        44100
+      );
+      const decodeCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const decoded = await decodeCtx.decodeAudioData(arr);
+      const sampleRate = decoded.sampleRate;
+
+      const startFrame = Math.floor(clipStart * sampleRate);
+      const endFrame = Math.floor(clipEnd * sampleRate);
+      const frames = Math.max(0, endFrame - startFrame);
+
+      const out = ctx.createBuffer(decoded.numberOfChannels, frames, sampleRate);
+      for (let ch = 0; ch < decoded.numberOfChannels; ch++) {
+        const chan = decoded.getChannelData(ch);
+        out.getChannelData(ch).set(chan.subarray(startFrame, endFrame));
+      }
+
+      // Render not strictly necessary since we already copied samples, but ensures consistency
+      // with OfflineAudioContext pipeline if we later add processing.
+      // For simplicity, skip offline rendering graph & just encode the buffer.
+      const wavBuffer = audioBufferToWav(out);
+      const wavBlob = new Blob([wavBuffer], { type: "audio/wav" });
+      const url = URL.createObjectURL(wavBlob);
+      setAudioUrl(url);
+      setAudioFile(wavBlob);
+      setAudioStatus("Being reviewed");
+    } catch (e) {
+      console.error("Clip failed:", e);
+      alert("Clipping failed. Try a smaller range or different source.");
+    } finally {
+      setClipping(false);
+    }
+  }
+
+  function revertToOriginal() {
+    const url = originalUrlRef.current || "";
+    setAudioUrl(url);
+    setAudioFile(null);
+    setAudioStatus("Outstanding");
+  }
+
+  /** ------------ Google TTS preview UI & logic ------------ **/
+  const [voices, setVoices] = useState([]);
+  const [voicesLoading, setVoicesLoading] = useState(false);
+  const [voiceError, setVoiceError] = useState("");
+  const [selectedVoice, setSelectedVoice] = useState("");
+  const [speakingRate, setSpeakingRate] = useState(1.0); // 0.25–4.0 (GCP range)
+  const [pitch, setPitch] = useState(0);                 // -20.0–20.0 semitones
+  const [ttsBusy, setTtsBusy] = useState(false);
+
+  async function loadVoices() {
+    setVoicesLoading(true);
+    setVoiceError("");
+    try {
+      const r = await fetch("/api/tts/voices");
+      if (!r.ok) throw new Error(`Voices error ${r.status}`);
+      const data = await r.json();
+      setVoices(Array.isArray(data.voices) ? data.voices : []);
+      if (Array.isArray(data.voices) && data.voices.length) {
+        setSelectedVoice(data.voices[0].name || "");
+      }
+    } catch (e) {
+      console.error(e);
+      setVoiceError("Could not load voices. Server endpoint not configured?");
+    } finally {
+      setVoicesLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    if (open && tab === "audio") loadVoices();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, tab]);
+
+  async function previewTts() {
+    if (!selectedVoice) {
+      alert("Pick a voice first.");
+      return;
+    }
+    try {
+      setTtsBusy(true);
+      setVoiceError("");
+
+      // 🔹 Use glyph+อ for Thai consonants by default (or a saved override if present)
+      const text = buildLetterTtsText(letter);
+
+      const r = await fetch("/api/tts/synthesize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text,
+          voiceName: selectedVoice,
+          speakingRate: Number(speakingRate),
+          pitch: Number(pitch),
+        }),
+      });
+      if (!r.ok) throw new Error(`TTS error ${r.status}`);
+      const blob = await r.blob(); // e.g., audio/mp3 or audio/wav
+      const url = URL.createObjectURL(blob);
+      // Set URL for preview, but *do not* mark as final until user clicks "Save"
+      setAudioUrl(url);
+      // Stash blob so Save uploads it if they choose "Save"
+      setAudioFile(blob);
+      setAudioStatus("Being reviewed");
+    } catch (e) {
+      console.error(e);
+      setVoiceError("Could not synthesize audio. Check server logs/config.");
+    } finally {
+      setTtsBusy(false);
+    }
+  }
+
+  /** ------------ Save ------------ **/
   async function onSave() {
     const id = String(letter?.id || "").trim();
     if (!id) {
@@ -224,7 +460,7 @@ export default function LetterEditorModal({ open, onClose, letter }) {
         audio: {
           ...(letter?.audio || {}),
           glyph: publicAudioUrl || letter?.audio?.glyph || "",
-          source: audioFile ? "human" : (letter?.audio?.source || "tts"),
+          source: audioFile ? "human_or_tts" : (letter?.audio?.source || "tts"),
           updatedAt: new Date().toISOString(),
         },
         review: {
@@ -324,7 +560,8 @@ export default function LetterEditorModal({ open, onClose, letter }) {
           )}
 
           {tab === "audio" && (
-            <div className="space-y-4">
+            <div className="space-y-5">
+              {/* Record / upload + status */}
               <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
                 <div className="flex items-center gap-2">
                   <button
@@ -385,13 +622,192 @@ export default function LetterEditorModal({ open, onClose, letter }) {
                   className="w-full mt-2"
                   controls
                   preload="metadata"
-                  // Hide browser download + native playback-rate item; we use our own speed control.
-                  // (Supported in Chromium/Safari; Firefox never showed a download button for audio anyway.)
                   controlsList="nodownload noplaybackrate"
                 />
 
                 <p className="mt-2 text-xs text-gray-500">
                   Tip: We show a custom playback speed so it’s always available (recorded blobs or Firebase URLs).
+                </p>
+              </div>
+
+              {/* --- New: Clip tool --- */}
+              <div className="rounded-lg border p-4 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="text-sm font-medium text-gray-700">Clip audio</div>
+                  <div className="text-xs text-gray-500">
+                    {duration ? `${clipStart.toFixed(2)}s – ${clipEnd.toFixed(2)}s / ${duration.toFixed(2)}s` : "—"}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">Start</label>
+                    <input
+                      type="range"
+                      min={0}
+                      max={duration || 0}
+                      step="0.01"
+                      value={clipStart}
+                      onChange={(e) => setClipStart(Math.min(parseFloat(e.target.value), clipEnd))}
+                      className="w-full"
+                      disabled={!audioUrl || !duration}
+                    />
+                    <div className="flex items-center gap-2 mt-2">
+                      <input
+                        type="number"
+                        min={0}
+                        max={duration || 0}
+                        step="0.01"
+                        value={clipStart}
+                        onChange={(e) => setClipStart(Math.min(parseFloat(e.target.value || 0), clipEnd))}
+                        className="w-28 rounded-md border px-2 py-1 text-sm"
+                        disabled={!audioUrl || !duration}
+                      />
+                      <button
+                        type="button"
+                        onClick={setStartToCurrent}
+                        className="rounded-md px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200"
+                        disabled={!audioUrl || !duration}
+                        title="Set start to current playhead"
+                      >
+                        Set to current
+                      </button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">End</label>
+                    <input
+                      type="range"
+                      min={0}
+                      max={duration || 0}
+                      step="0.01"
+                      value={clipEnd}
+                      onChange={(e) => setClipEnd(Math.max(parseFloat(e.target.value), clipStart))}
+                      className="w-full"
+                      disabled={!audioUrl || !duration}
+                    />
+                    <div className="flex items-center gap-2 mt-2">
+                      <input
+                        type="number"
+                        min={0}
+                        max={duration || 0}
+                        step="0.01"
+                        value={clipEnd}
+                        onChange={(e) => setClipEnd(Math.max(parseFloat(e.target.value || 0), clipStart))}
+                        className="w-28 rounded-md border px-2 py-1 text-sm"
+                        disabled={!audioUrl || !duration}
+                      />
+                      <button
+                        type="button"
+                        onClick={setEndToCurrent}
+                        className="rounded-md px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200"
+                        disabled={!audioUrl || !duration}
+                        title="Set end to current playhead"
+                      >
+                        Set to current
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={applyClip}
+                    className="rounded-md px-3 py-1.5 text-sm bg-primary text-white hover:bg-primary/90 disabled:opacity-60"
+                    disabled={!audioUrl || !duration || clipping}
+                    title="Replace the current audio with the clipped segment"
+                  >
+                    {clipping ? "Clipping…" : "Apply clip"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={revertToOriginal}
+                    className="rounded-md px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 disabled:opacity-60"
+                    disabled={!originalUrlRef.current}
+                    title="Revert to originally loaded audio for this session"
+                  >
+                    Revert to original
+                  </button>
+                </div>
+              </div>
+
+              {/* --- New: TTS voice try-outs --- */}
+              <div className="rounded-lg border p-4 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="text-sm font-medium text-gray-700">Try other voices (Google TTS)</div>
+                  {voicesLoading && <div className="text-xs text-gray-500">Loading voices…</div>}
+                </div>
+
+                {voiceError && (
+                  <div className="text-xs text-rose-600 bg-rose-50 border border-rose-200 rounded-md px-2 py-1">
+                    {voiceError}
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div className="md:col-span-2">
+                    <label className="block text-xs text-gray-600 mb-1">Voice</label>
+                    <select
+                      className="w-full rounded-md border px-2 py-1.5 text-sm"
+                      value={selectedVoice}
+                      onChange={(e) => setSelectedVoice(e.target.value)}
+                    >
+                      {voices.map((v) => (
+                        <option key={v.name} value={v.name}>
+                          {v.name} {v.ssmlGender ? `(${v.ssmlGender})` : ""} {v.languageCodes?.[0] ? `— ${v.languageCodes[0]}` : ""}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">Rate</label>
+                    <input
+                      type="number"
+                      step="0.05"
+                      min="0.25"
+                      max="4"
+                      value={speakingRate}
+                      onChange={(e) => setSpeakingRate(parseFloat(e.target.value || "1"))}
+                      className="w-full rounded-md border px-2 py-1.5 text-sm"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs text-gray-600 mb-1">Pitch</label>
+                    <input
+                      type="number"
+                      step="0.5"
+                      min="-20"
+                      max="20"
+                      value={pitch}
+                      onChange={(e) => setPitch(parseFloat(e.target.value || "0"))}
+                      className="w-full rounded-md border px-2 py-1.5 text-sm"
+                    />
+                  </div>
+
+                  <div className="md:col-span-2 flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={previewTts}
+                      className="rounded-md px-3 py-1.5 text-sm bg-primary text-white hover:bg-primary/90 disabled:opacity-60"
+                      disabled={!selectedVoice || ttsBusy}
+                    >
+                      {ttsBusy ? "Generating…" : "Preview with selected voice"}
+                    </button>
+                    <span className="text-xs text-gray-500">
+                      Text used:{" "}
+                      <code className="bg-gray-50 px-1 py-0.5 rounded">
+                        {buildLetterTtsText(letter) || "—"}
+                      </code>
+                    </span>
+                  </div>
+                </div>
+
+                <p className="text-xs text-gray-500">
+                  The preview replaces the current audio in the player above. Click <strong>Save</strong> to upload.
                 </p>
               </div>
             </div>

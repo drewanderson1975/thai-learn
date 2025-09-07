@@ -1,0 +1,14 @@
+{
+  "name": "thai-learn-root",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Root workspace for Thai Learn (frontend + server orchestration)",
+  "scripts": {
+    "frontend": "cd frontend && npm run dev",
+    "api": "cd server && npm run dev",
+    "dev:all": "concurrently -k -n FRONT,API -c auto \"npm run frontend\" \"npm run api\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
