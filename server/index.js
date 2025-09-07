@@ -21,10 +21,16 @@ app.get("/api/tts/voices", async (_req, res) => {
     const voices = await listVoices();
     res.json({ voices });
   } catch (e) {
-    console.error("[voices] error:", e);
-    res.status(500).json({ error: "Failed to list voices" });
+    console.error("[voices] error:", e); // keep
+    res.status(500).json({
+      error: "Failed to list voices",
+      message: e.message,
+      code: e.code,
+      details: e.details || undefined
+    });
   }
 });
+
 
 // --- Synthesize ---
 // body: { text, voiceName?, speakingRate?, pitch?, audioEncoding? }
