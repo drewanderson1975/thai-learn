@@ -11,8 +11,9 @@ It complements the `PROJECT_GUIDELINES.md` file, which defines coding and design
   - `AlphabetLow.jsx`  
   - `AlphabetMid.jsx`  
   - `AlphabetHigh.jsx`  
-- Tiles now pull **notes + audio** from Firebase storage.  
-- GitHub Copilot used for code edits; PR workflow tested.  
+- Tiles now pull **notes + audio** from Firebase storage if they don't existing in Firebase then the files in the repo are used 
+- GitHub Copilot used for code edits; PR workflow tested.
+- Google Text-to-speach is used to generate audio
 
 ---
 
@@ -25,10 +26,12 @@ It complements the `PROJECT_GUIDELINES.md` file, which defines coding and design
 ---
 
 ## 📚 Core Features
-- **Guided Lessons** → structured progression through alphabet, tones, words, phrases.  
-- **Review Area** → topic-based, with spaced repetition scheduling.  
+- **Guided Lessons** → structured progression through alphabet, tones, words, phrases.
 - **Exercises** → quizzes, listening practice, pronunciation practice (listen & repeat).  
-- **Audio Integration** → native speaker recordings stored in Firebase.  
+- **Alphabet** → Letters spit into Constants, Mid, Low and High and Vowels.
+- **Words** → Lists by category, overall structure still to be determined.
+-  **Phrases** → Lists by category, overall structure still to be determined. 
+- **Audio Integration** → native speaker AI generated recordings stored in Firebase.  
 
 ---
 
