@@ -26,7 +26,7 @@
 
 - ## DoD (AI)
 A task is “done” when:
-1) Acceptance criteria met.
+1) Acceptance criteria and/ or requirements met.
 2) Code builds; format, lint, unit tests pass.
 3) PR opened using template with evidence.
 4) Docs updated.
